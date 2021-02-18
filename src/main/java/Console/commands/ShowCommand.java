@@ -1,22 +1,25 @@
 package Console.commands;
 
 import CollectionManager.ArrayListManager;
-import Console.Console;
+import Console.ConsoleWriter;
+
+import java.io.IOException;
+import java.io.Writer;
 
 public class ShowCommand extends AbstractCommand {
 
-    private Console console;
+    private ConsoleWriter writer;
     private ArrayListManager listManager;
 
-    public ShowCommand(Console console, ArrayListManager listManager) {
+    public ShowCommand(ConsoleWriter writer, ArrayListManager listManager) {
         super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении");
-        this.console = console;
+        this.writer = writer;
         this.listManager = listManager;
     }
 
     @Override
     public CommandCode execute(String argument) {
-        console.print(listManager.show());
+        writer.write(listManager.show());
         return CommandCode.DEFAULT;
     }
 }

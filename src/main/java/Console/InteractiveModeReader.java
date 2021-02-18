@@ -2,27 +2,29 @@ package Console;
 
 import musicband.*;
 
-import java.time.LocalDate;
+import java.io.IOException;
+import java.io.Writer;
 
 public class InteractiveModeReader implements Reader {
     private MusicBandFieldsReader reader;
-    private Console console;
+    private ConsoleWriter writer;
 
-    public InteractiveModeReader(MusicBandFieldsReader reader, Console console) {
+    public InteractiveModeReader(MusicBandFieldsReader reader, ConsoleWriter writer) {
         this.reader = reader;
-        this.console = console;
+        this.writer = writer;
     }
 
     public String readName() {
         String name;
         while(true) {
             try {
-                console.print("Введите название:");
+                writer.write("Введите название:");
                 name = reader.readName();
                 break;
             }
             catch (InputValueExeption e) {
-                console.print(e.getMessage());
+                writer.write(e.getMessage());
+
             }
         }
         return name;
@@ -33,15 +35,15 @@ public class InteractiveModeReader implements Reader {
         Double y;
         while(true) {
             try {
-                console.print("Введите координату X:");
+                writer.write("Введите координату X:");
                 x = reader.readX();
-                console.print("Введите координату Y:");
+                writer.write("Введите координату Y:");
                 y = reader.readY();
                 break;
             }
-            catch (InputValueExeption e) {
-                console.print(e.getMessage());
-            }
+        catch (InputValueExeption e) {
+            writer.write(e.getMessage());
+        }
         }
         return new Coordinates(x, y);
     }
@@ -50,12 +52,11 @@ public class InteractiveModeReader implements Reader {
         int numberOfParticipants;
         while(true) {
             try {
-                console.print("Введите количество участников:");
+                writer.write("Введите количество участников:");
                 numberOfParticipants = reader.readNumberOfParticipants();
                 break;
-            }
-            catch (InputValueExeption e) {
-                console.print(e.getMessage());
+            } catch (InputValueExeption e) {
+                writer.write(e.getMessage());
             }
         }
         return numberOfParticipants;
@@ -65,12 +66,11 @@ public class InteractiveModeReader implements Reader {
         Integer singlesCount;
         while(true) {
             try {
-                console.print("Введите количество синглов:");
+                writer.write("Введите количество синглов:");
                 singlesCount = reader.readSinglesCount();
                 break;
-            }
-            catch (InputValueExeption e) {
-                console.print(e.getMessage());
+            } catch (InputValueExeption e) {
+                writer.write(e.getMessage());
             }
         }
         return singlesCount;
@@ -80,15 +80,14 @@ public class InteractiveModeReader implements Reader {
         MusicGenre musicGenre;
         while(true) {
             try {
-                console.print("Выберите жанр из списка:");
-                for (MusicGenre genre: MusicGenre.values()) {
-                    console.print(genre.name());
+                writer.write("Выберите жанр из списка:");
+                for (MusicGenre genre : MusicGenre.values()) {
+                    writer.write(genre.name());
                 }
                 musicGenre = reader.readMusicGenre();
                 break;
-            }
-            catch (InputValueExeption e) {
-                console.print(e.getMessage());
+            } catch (InputValueExeption e) {
+                writer.write(e.getMessage());
             }
         }
         return musicGenre;
@@ -98,12 +97,11 @@ public class InteractiveModeReader implements Reader {
         Label label;
         while(true) {
             try {
-                console.print("Введите название лейбла:");
+                writer.write("Введите название лейбла:");
                 label = reader.readLabel();
                 break;
-            }
-            catch (InputValueExeption e) {
-                console.print(e.getMessage());
+            } catch (InputValueExeption e) {
+                writer.write(e.getMessage());
             }
         }
         return label;

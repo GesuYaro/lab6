@@ -1,6 +1,7 @@
 package Console.commands;
 
 import CollectionManager.ArrayListManager;
+import Console.ConsoleWriter;
 import Console.Reader;
 import musicband.Coordinates;
 import musicband.Label;
@@ -13,11 +14,11 @@ import java.time.LocalDate;
 
 public class InsertAtCommand extends AbstractCommand {
 
-    private Writer writer;
+    private ConsoleWriter writer;
     private ArrayListManager listManager;
     private Reader reader;
 
-    public InsertAtCommand(Writer writer, ArrayListManager listManager, Reader reader) {
+    public InsertAtCommand(ConsoleWriter writer, ArrayListManager listManager, Reader reader) {
         super("insert_at index {element}", "добавить новый элемент в заданную позицию");
         this.writer = writer;
         this.listManager = listManager;
@@ -43,11 +44,7 @@ public class InsertAtCommand extends AbstractCommand {
             listManager.insertAtIndex(index, musicBand);
         }
         catch (IndexOutOfBoundsException e) {
-            try {
-                writer.write("Ошибка. Индекс больше размера коллекции");
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            writer.write("Ошибка. Индекс больше размера коллекции");
         }
         return CommandCode.DEFAULT;
     }

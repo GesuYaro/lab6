@@ -1,7 +1,7 @@
 package Console.commands;
 
 import CollectionManager.ArrayListManager;
-import Console.Console;
+import Console.ConsoleWriter;
 import Console.Exeptions.NoSuchIdExeption;
 import Console.Reader;
 import musicband.Coordinates;
@@ -9,17 +9,19 @@ import musicband.Label;
 import musicband.MusicBand;
 import musicband.MusicGenre;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.time.LocalDate;
 
 public class UpdateCommand extends AbstractCommand {
 
-    private Console console;
+    private ConsoleWriter writer;
     private ArrayListManager listManager;
     private Reader reader;
 
-    public UpdateCommand(Console console, ArrayListManager listManager, Reader reader) {
+    public UpdateCommand(ConsoleWriter writer, ArrayListManager listManager, Reader reader) {
         super("update id {element}", "обновить значение элемента коллекции, id которого равен заданному");
-        this.console = console;
+        this.writer = writer;
         this.listManager = listManager;
         this.reader = reader;
     }
@@ -41,7 +43,7 @@ public class UpdateCommand extends AbstractCommand {
             listManager.replace(id, musicBand);
         }
         catch (NoSuchIdExeption e) {
-            console.print(e.getMessage());
+            writer.write(e.getMessage());
         }
         return CommandCode.DEFAULT;
     }

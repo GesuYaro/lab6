@@ -26,6 +26,11 @@ public class CommandHandler {
 
     }
 
+    public CommandHandler(HashMap<String, Command> commands, HistoryStorage historyStorage){
+        this.commands = commands;
+        this.historyStorage = historyStorage;
+    }
+
     public void setCommands(HashMap<String, Command> commands) {
         this.commands = commands;
     }

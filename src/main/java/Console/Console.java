@@ -8,20 +8,20 @@ import Console.CommandHandler;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 public class Console implements Runnable {
 
     private CommandHandler commandHandler;
     private BufferedReader reader;
-    private BufferedWriter writer;
+    private ConsoleWriter writer;
 
 
-    public Console(CommandHandler commandHandler, BufferedReader reader, BufferedWriter writer) {
+    public Console(CommandHandler commandHandler, BufferedReader reader, ConsoleWriter writer) {
         this.commandHandler = commandHandler;
         this.reader = reader;
         this.writer = writer;
     }
-    public Console() {}
 
     @Override
     public void run() {
@@ -61,11 +61,7 @@ public class Console implements Runnable {
 //    }
 
     public void print(String string) {
-        try {
-            writer.write(string);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writer.write(string);
 
     }
 }
