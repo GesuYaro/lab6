@@ -2,6 +2,7 @@ package Console.commands;
 
 import CollectionManager.ArrayListManager;
 import Console.ConsoleWriter;
+import Console.Exeptions.NoArgumentFoundExeption;
 import Console.Exeptions.NoSuchIdExeption;
 import Console.Reader;
 import musicband.Coordinates;
@@ -28,22 +29,26 @@ public class UpdateCommand extends AbstractCommand {
 
     @Override
     public CommandCode execute(String argument) {
-        Long arg = Long.parseLong(argument.trim().split(" ")[0]);
-        String name = reader.readName();
-        Coordinates coordinates = reader.readCoordinates();
-        int numberOfParticipants = reader.readNumberOfParticipants();
-        Integer singlesCount = reader.readSinglesCount();
-        MusicGenre musicGenre = reader.readMusicGenre();
-        Label label = reader.readlabel();
         try {
-            MusicBand updatingMusicBand = listManager.getById(arg);
-            long id = updatingMusicBand.getId();
-            LocalDate creationDate = updatingMusicBand.getCreationDate();
-            MusicBand musicBand = new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, musicGenre, label);
-            listManager.replace(id, musicBand);
-        }
-        catch (NoSuchIdExeption e) {
-            writer.write(e.getMessage());
+            Long arg = Long.parseLong(argument.trim().split(" ")[0]);
+            String name = reader.readName();
+            Coordinates coordinates = reader.readCoordinates();
+            int numberOfParticipants = reader.readNumberOfParticipants();
+            Integer singlesCount = reader.readSinglesCount();
+            MusicGenre musicGenre = reader.readMusicGenre();
+            Label label = reader.readlabel();
+            try {
+                MusicBand updatingMusicBand = listManager.getById(arg);
+                long id = updatingMusicBand.getId();
+                LocalDate creationDate = updatingMusicBand.getCreationDate();
+                MusicBand musicBand = new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, musicGenre, label);
+                listManager.replace(id, musicBand);
+            }
+            catch (NoSuchIdExeption e) {
+                writer.write(e.getMessage());
+            }
+        } catch (NumberFormatException e) {
+            throw new NoArgumentFoundExeption();
         }
         return CommandCode.DEFAULT;
     }

@@ -1,5 +1,6 @@
 package Console;
 
+import Console.Exeptions.NoArgumentFoundExeption;
 import Console.Exeptions.NoSuchCommandExeption;
 import Console.commands.Command;
 import Console.commands.CommandCode;
@@ -33,9 +34,13 @@ public class Console implements Runnable {
             userCommand = reader.readLine().trim().split(" ", 2);
             userCommand[0] = userCommand[0].trim();
             if (userCommand.length > 1) userCommand[1] = userCommand[1].trim();
-            commandCode = commandHandler.execute(userCommand);
+            try {
+                commandCode = commandHandler.execute(userCommand);
+            } catch (NoArgumentFoundExeption e) {
+                writer.write(e.getMessage());
+            }
             } catch (NoSuchCommandExeption e) {
-                this.print(e.getMessage());
+                writer.write(e.getMessage());
             }
             catch (IOException e) {
                 e.printStackTrace();
