@@ -92,6 +92,7 @@ public class MusicBandFieldsReader {
         int numberOfParticipants;
             try {
                 numberOfParticipants = Integer.parseInt(reader.readLine().trim());
+                if (numberOfParticipants <= 0) throw new NumberFormatException();
             }
             catch (NumberFormatException e){
                 throw new InputValueExeption("Ошибка ввода\nВведите натуральное число");

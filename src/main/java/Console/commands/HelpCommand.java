@@ -12,6 +12,7 @@ public class HelpCommand extends AbstractCommand {
     private ConsoleWriter writer;
     public HelpCommand(ConsoleWriter writer, HashMap<String, Command> commands) {
         super("help","вывести справку по доступным командам");
+        this.writer = writer;
         this.commands = commands;
     }
     public HelpCommand() {
@@ -24,12 +25,13 @@ public class HelpCommand extends AbstractCommand {
 
     @Override
     public CommandCode execute(String argument) {
-        String description = "";
+        String description = "Комманды:\n";
         for (String key : commands.keySet()) {
             Command command;
             command = commands.get(key);
             description += command.getName() + " : " + command.getDescription() + "\n";
         }
+        //System.out.println(description);
         writer.write(description);
 
         return CommandCode.DEFAULT;

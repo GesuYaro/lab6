@@ -9,13 +9,14 @@
 //import java.io.InputStreamReader;
 //import java.time.LocalDate;
 //
-//public class TestMain {
-//    public static void main(String[] args) {
+public class TestMain {
+    public static void main(String[] args) {
 //        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 //        MusicBandFieldsReader mbfReader = new MusicBandFieldsReader(reader);
 //        Console console = new Console(new CommandHandler(), new BufferedReader(new InputStreamReader(System.in)));
 //        InteractiveModeReader interactiveModeReader = new InteractiveModeReader(mbfReader, console);
 //        System.out.println(interactiveModeReader.readlabel());
-//
-//    }
-//}
+
+
+    }
+}

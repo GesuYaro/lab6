@@ -23,7 +23,7 @@ public class Main {
         InteractiveModeReader interactiveModeReader = new InteractiveModeReader(musicBandFieldsReader, writer);
         HashMap<String, Command> commands = new HashMap<>();
         ArrayListManager arrayListManager = new ArrayListManager(musicBandArrayList, LocalDate.now());
-        commands.put("help", new HelpCommand());
+        commands.put("help", new HelpCommand()); // не работает
         commands.put("info", new InfoCommand(writer, arrayListManager));
         commands.put("show", new ShowCommand(writer, arrayListManager));
         commands.put("add", new AddCommand(arrayListManager, interactiveModeReader));
@@ -32,10 +32,10 @@ public class Main {
         commands.put("clear", new ClearCommand(arrayListManager));
         commands.put("exit", new ExitCommand());
         commands.put("insert_at", new InsertAtCommand(writer, arrayListManager, interactiveModeReader));
-        commands.put("remove_last", new RemoveLastCommand(arrayListManager));
-        commands.put("history", new HistoryCommand(writer,historyStorage)); // должно начать работать
-        CommandHandler commandHandler = new CommandHandler(commands, historyStorage);
+        commands.put("remove_last", new RemoveLastCommand(arrayListManager)); // переделать, чтоб удалял последний добавленный, а не последний
+        commands.put("history", new HistoryCommand(writer,historyStorage));
         commands.put("help", new HelpCommand(writer, commands));
+        CommandHandler commandHandler = new CommandHandler(commands, historyStorage);
         Console console = new Console(commandHandler, reader, writer);
         console.run();
     }

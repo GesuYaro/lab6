@@ -20,7 +20,7 @@ public class HistoryCommand extends AbstractCommand {
         String[] history = historyStorage.getCommandHistory();
         String historyInLine = "";
         for (String h : history) {
-            if (h != null) historyInLine += h + "\n";
+            if (h != null) historyInLine = h + "\n" + historyInLine;
         }
         writer.write(historyInLine);
         return CommandCode.DEFAULT;
