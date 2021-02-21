@@ -10,7 +10,7 @@ public class HistoryCommand extends AbstractCommand {
     private ConsoleWriter writer;
     private CommandHandler.HistoryStorage historyStorage;
     public HistoryCommand(ConsoleWriter writer, CommandHandler.HistoryStorage historyStorage) {
-        super("history", "вывести последние 7 команд (без их аргументов)");
+        super("history", "print the last 7 commands (without their arguments)");
         this.writer = writer;
         this.historyStorage = historyStorage;
     }

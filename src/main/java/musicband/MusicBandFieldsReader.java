@@ -3,6 +3,7 @@ package musicband;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -21,7 +22,7 @@ public class MusicBandFieldsReader {
                 throw new InputValueExeption();
             }
             catch (IOException e) {
-                throw new InputValueExeption("Непредвиденная ошибка ввода");
+                throw new InputValueExeption("Unexpected input error");
             }
         return id;
     }
@@ -34,10 +35,10 @@ public class MusicBandFieldsReader {
                 if (!prename.equals("")) {
                     name = prename;
                 }
-                else throw new InputValueExeption("Ошибка ввода\nПоле не может быть null, Строка не может быть пустой");
+                else throw new InputValueExeption("Input Error\nField can't be null, string can't be empty");
             }
             catch (IOException e) {
-                throw new InputValueExeption("Непредвиденная ошибка ввода");
+                throw new InputValueExeption("Unexpected input error");
             }
         return name;
     }
@@ -46,12 +47,13 @@ public class MusicBandFieldsReader {
         long x;
             try {
                 x = Long.parseLong(reader.readLine().trim());
+                if (x > 3) throw new InputValueExeption("Field can't be greater than 3");
             }
             catch (NumberFormatException e){
-                throw new InputValueExeption("Ошибка ввода\nПоле должно быть целым числом");
+                throw new InputValueExeption("Input Error\nField should be long");
             }
             catch (IOException e) {
-                throw new InputValueExeption("Непредвиденная ошибка ввода");
+                throw new InputValueExeption("Unexpected input error");
             }
         return x;
     }
@@ -60,12 +62,13 @@ public class MusicBandFieldsReader {
         double y;
             try {
                 y = Double.parseDouble(reader.readLine().trim());
+                if (y < -859) throw new InputValueExeption("Field should be greater than -859");
             }
             catch (NumberFormatException e){
-                throw new InputValueExeption("Ошибка ввода\nПоле должно быть действительным числом с плавающей точкой");
+                throw new InputValueExeption("Input Error\nField should be double");
             }
             catch (IOException e) {
-                throw new InputValueExeption("Непредвиденная ошибка ввода");
+                throw new InputValueExeption("Unexpected input error");
             }
         return y;
     }
@@ -81,9 +84,9 @@ public class MusicBandFieldsReader {
         try {
             date = LocalDate.parse(reader.readLine().trim());
         } catch (DateTimeParseException e) {
-            throw new InputValueExeption("Ошибка ввода\nВведите дату в формате YYYY-MM-DD");
+            throw new InputValueExeption("Input Error\nEnter date in YYYY-MM-DD format");
         } catch (IOException e) {
-            throw new InputValueExeption("Непредвиденная ошибка ввода");
+            throw new InputValueExeption("Unexpected input error");
         }
         return date;
     }
@@ -95,10 +98,10 @@ public class MusicBandFieldsReader {
                 if (numberOfParticipants <= 0) throw new NumberFormatException();
             }
             catch (NumberFormatException e){
-                throw new InputValueExeption("Ошибка ввода\nВведите натуральное число");
+                throw new InputValueExeption("Input Error\nEnter the natural number");
             }
             catch (IOException e) {
-                throw new InputValueExeption("Непредвиденная ошибка ввода");
+                throw new InputValueExeption("Unexpected input error");
             }
         return numberOfParticipants;
     }
@@ -112,10 +115,10 @@ public class MusicBandFieldsReader {
                 }
             }
             catch (NumberFormatException e){
-                throw new InputValueExeption("Ошибка ввода\nВведите натуральное число");
+                throw new InputValueExeption("Input Error\nEnter the natural number");
             }
             catch (IOException e) {
-                throw new InputValueExeption("Непредвиденная ошибка ввода");
+                throw new InputValueExeption("Unexpected input error");
             }
         return singlesCount;
     }
@@ -133,12 +136,12 @@ public class MusicBandFieldsReader {
 
                     }
                     if (choicedMusicGenre == null) {
-                        throw new InputValueExeption("Ошибка ввода\nВыберите жанр из списка");
+                        throw new InputValueExeption("Input Error\nGenre should be chosen from list");
                     }
                 }
             }
             catch (IOException e) {
-                throw new InputValueExeption("Непредвиденная ошибка ввода");
+                throw new InputValueExeption("Unexpected input error");
             }
 
         return choicedMusicGenre;
@@ -150,7 +153,7 @@ public class MusicBandFieldsReader {
             label.setName(reader.readLine().trim());
         }
         catch (IOException e) {
-            throw new InputValueExeption("Непредвиденная ошибка ввода");
+            throw new InputValueExeption("Unexpected input error");
         }
         return label;
     }

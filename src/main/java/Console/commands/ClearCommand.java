@@ -5,7 +5,7 @@ import CollectionManager.ArrayListManager;
 public class ClearCommand extends AbstractCommand {
     private ArrayListManager listManager;
     public ClearCommand(ArrayListManager listManager) {
-        super("clear", "очистить коллекцию");
+        super("clear", "clear collection");
         this.listManager = listManager;
     }
 

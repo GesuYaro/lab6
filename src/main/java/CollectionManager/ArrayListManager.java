@@ -19,9 +19,9 @@ public class ArrayListManager {
 
     public String info() {
         String str = "";
-        str += "Тип: ArrayList<MusicBand>"
-                + "\nДата инициализации: " + initializationDate.toString()
-                + "\nКоличество элементов: " + arrayList.size();
+        str += "Type: ArrayList<MusicBand>"
+                + "\nInitialization date: " + initializationDate.toString()
+                + "\nNumber of elements: " + arrayList.size();
         return str;
     }
 

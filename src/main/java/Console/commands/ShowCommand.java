@@ -12,7 +12,7 @@ public class ShowCommand extends AbstractCommand {
     private ArrayListManager listManager;
 
     public ShowCommand(ConsoleWriter writer, ArrayListManager listManager) {
-        super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении");
+        super("show", "print all elements of the collection in string representation");
         this.writer = writer;
         this.listManager = listManager;
     }

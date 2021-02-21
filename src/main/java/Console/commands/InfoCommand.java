@@ -10,7 +10,7 @@ public class InfoCommand extends AbstractCommand {
     private ConsoleWriter writer;
     private ArrayListManager listManager;
     public InfoCommand(ConsoleWriter writer, ArrayListManager listManager) {
-        super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)");
+        super("info", "print information about the collection (type, date of initialization, number of elements, etc.) to standard output");
         this.writer = writer;
         this.listManager = listManager;
     }

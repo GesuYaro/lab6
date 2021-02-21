@@ -18,7 +18,7 @@ public class InteractiveModeReader implements Reader {
         String name;
         while(true) {
             try {
-                writer.write("Введите название:");
+                writer.write("Enter the name:");
                 name = reader.readName();
                 break;
             }
@@ -35,9 +35,9 @@ public class InteractiveModeReader implements Reader {
         Double y;
         while(true) {
             try {
-                writer.write("Введите координату X:");
+                writer.write("Enter X coordinate:");
                 x = reader.readX();
-                writer.write("Введите координату Y:");
+                writer.write("Enter Y coordinate");
                 y = reader.readY();
                 break;
             }
@@ -52,7 +52,7 @@ public class InteractiveModeReader implements Reader {
         int numberOfParticipants;
         while(true) {
             try {
-                writer.write("Введите количество участников:");
+                writer.write("Enter the number of participants:");
                 numberOfParticipants = reader.readNumberOfParticipants();
                 break;
             } catch (InputValueExeption e) {
@@ -66,7 +66,7 @@ public class InteractiveModeReader implements Reader {
         Integer singlesCount;
         while(true) {
             try {
-                writer.write("Введите количество синглов:");
+                writer.write("Enter singles count:");
                 singlesCount = reader.readSinglesCount();
                 break;
             } catch (InputValueExeption e) {
@@ -80,7 +80,7 @@ public class InteractiveModeReader implements Reader {
         MusicGenre musicGenre;
         while(true) {
             try {
-                writer.write("Выберите жанр из списка:");
+                writer.write("Choose the genre from the list:");
                 for (MusicGenre genre : MusicGenre.values()) {
                     writer.write(genre.name());
                 }
@@ -97,7 +97,7 @@ public class InteractiveModeReader implements Reader {
         Label label;
         while(true) {
             try {
-                writer.write("Введите название лейбла:");
+                writer.write("Enter the label name:");
                 label = reader.readLabel();
                 break;
             } catch (InputValueExeption e) {

@@ -20,7 +20,7 @@ public class InsertAtCommand extends AbstractCommand {
     private Reader reader;
 
     public InsertAtCommand(ConsoleWriter writer, ArrayListManager listManager, Reader reader) {
-        super("insert_at index {element}", "добавить новый элемент в заданную позицию");
+        super("insert_at index {element}", "add a new item at a given position");
         this.writer = writer;
         this.listManager = listManager;
         this.reader = reader;
@@ -45,7 +45,7 @@ public class InsertAtCommand extends AbstractCommand {
                 MusicBand musicBand = new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, musicGenre, label);
                 listManager.insertAtIndex(index, musicBand);
             } catch (IndexOutOfBoundsException e) {
-                writer.write("Ошибка. Индекс больше размера коллекции");
+                writer.write("ERROR. Index is out of bounds");
             }
         } catch (NumberFormatException e) {
             throw new NoArgumentFoundExeption();

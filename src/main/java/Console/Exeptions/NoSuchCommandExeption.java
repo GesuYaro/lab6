@@ -3,9 +3,9 @@ package Console.Exeptions;
 public class NoSuchCommandExeption extends RuntimeException {
 
     public NoSuchCommandExeption() {
-        super("Нет такой команды");
+        super("No such command");
     }
     public NoSuchCommandExeption(String message) {
-        super(message + " не является командой");
+        super(message + " is not a command");
     }
 }

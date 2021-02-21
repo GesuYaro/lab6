@@ -8,7 +8,7 @@ public class RemoveByIdCommand extends AbstractCommand {
     private ArrayListManager listManager;
 
     public RemoveByIdCommand(ArrayListManager listManager) {
-        super("remove_by_id id", "удалить элемент из коллекции по его id");
+        super("remove_by_id id", "remove an item from the collection by its id");
         this.listManager = listManager;
     }
 

@@ -17,7 +17,7 @@ public class AddCommand extends AbstractCommand {
     private Reader reader;
 
     public AddCommand(ArrayListManager listManager, Reader reader) {
-        super("add {element}", "добавить новый элемент в коллекцию");
+        super("add {element}", "add new element into collection");
         this.listManager = listManager;
         this.reader = reader;
     }

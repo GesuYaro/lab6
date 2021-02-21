@@ -21,7 +21,7 @@ public class UpdateCommand extends AbstractCommand {
     private Reader reader;
 
     public UpdateCommand(ConsoleWriter writer, ArrayListManager listManager, Reader reader) {
-        super("update id {element}", "обновить значение элемента коллекции, id которого равен заданному");
+        super("update id {element}", "update the value of the collection item whose id is equal to the given");
         this.writer = writer;
         this.listManager = listManager;
         this.reader = reader;
