@@ -3,7 +3,6 @@ package musicband;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -12,6 +11,7 @@ public class MusicBandFieldsReader {
     public MusicBandFieldsReader(BufferedReader reader) {
         this.reader = reader;
     }
+    public MusicBandFieldsReader(){}
 
     public long readId() throws InputValueExeption {
         long id;
@@ -24,6 +24,18 @@ public class MusicBandFieldsReader {
             catch (IOException e) {
                 throw new InputValueExeption("Unexpected input error");
             }
+        return id;
+    }
+
+    public long readId(String string) throws InputValueExeption {
+        long id;
+        try {
+            id = Long.parseLong(string.trim());
+            if (id <= 0) throw new InputValueExeption("ID must be long and greater than 0");
+        }
+        catch (NumberFormatException e){
+            throw new InputValueExeption();
+        }
         return id;
     }
 
@@ -43,18 +55,41 @@ public class MusicBandFieldsReader {
         return name;
     }
 
+    public String readName(String string) throws InputValueExeption {
+        String name;
+        String prename;
+        prename = string.trim();
+        if (!prename.equals("")) {
+            name = prename;
+        }
+        else throw new InputValueExeption("Input Error\nField can't be null, string can't be empty");
+        return name;
+    }
+
     public long readX() throws InputValueExeption {
         long x;
-            try {
-                x = Long.parseLong(reader.readLine().trim());
-                if (x > 3) throw new InputValueExeption("Field can't be greater than 3");
-            }
-            catch (NumberFormatException e){
-                throw new InputValueExeption("Input Error\nField should be long");
-            }
-            catch (IOException e) {
-                throw new InputValueExeption("Unexpected input error");
-            }
+        try {
+            x = Long.parseLong(reader.readLine().trim());
+            if (x > 3) throw new InputValueExeption("Field can't be greater than 3");
+        }
+        catch (NumberFormatException e){
+            throw new InputValueExeption("Input Error\nField should be long");
+        }
+        catch (IOException e) {
+            throw new InputValueExeption("Unexpected input error");
+        }
+        return x;
+    }
+
+    public long readX(String string) throws InputValueExeption {
+        long x;
+        try {
+            x = Long.parseLong(string.trim());
+            if (x > 3) throw new InputValueExeption("Field can't be greater than 3");
+        }
+        catch (NumberFormatException e){
+            throw new InputValueExeption("Input Error\nField should be long");
+        }
         return x;
     }
 
@@ -70,6 +105,18 @@ public class MusicBandFieldsReader {
             catch (IOException e) {
                 throw new InputValueExeption("Unexpected input error");
             }
+        return y;
+    }
+
+    public double readY(String string) throws InputValueExeption {
+        double y;
+        try {
+            y = Double.parseDouble(string.trim());
+            if (y < -859) throw new InputValueExeption("Field should be greater than -859");
+        }
+        catch (NumberFormatException e){
+            throw new InputValueExeption("Input Error\nField should be double");
+        }
         return y;
     }
 
@@ -91,6 +138,16 @@ public class MusicBandFieldsReader {
         return date;
     }
 
+    public LocalDate readDate(String string) throws InputValueExeption {
+        LocalDate date;
+        try {
+            date = LocalDate.parse(string.trim());
+        } catch (DateTimeParseException e) {
+            throw new InputValueExeption("Input Error\nEnter date in YYYY-MM-DD format");
+        }
+        return date;
+    }
+
     public int readNumberOfParticipants() throws InputValueExeption {
         int numberOfParticipants;
             try {
@@ -103,6 +160,18 @@ public class MusicBandFieldsReader {
             catch (IOException e) {
                 throw new InputValueExeption("Unexpected input error");
             }
+        return numberOfParticipants;
+    }
+
+    public int readNumberOfParticipants(String string) throws InputValueExeption {
+        int numberOfParticipants;
+        try {
+            numberOfParticipants = Integer.parseInt(string.trim());
+            if (numberOfParticipants <= 0) throw new NumberFormatException();
+        }
+        catch (NumberFormatException e){
+            throw new InputValueExeption("Input Error\nEnter the natural number");
+        }
         return numberOfParticipants;
     }
 
@@ -120,6 +189,20 @@ public class MusicBandFieldsReader {
             catch (IOException e) {
                 throw new InputValueExeption("Unexpected input error");
             }
+        return singlesCount;
+    }
+
+    public Integer readSinglesCount(String string) throws InputValueExeption {
+        Integer singlesCount = null;
+        try {
+            String str = string.trim();
+            if (!str.equals("")) {
+                singlesCount = Integer.parseInt(str);
+            }
+        }
+        catch (NumberFormatException e){
+            throw new InputValueExeption("Input Error\nEnter the natural number");
+        }
         return singlesCount;
     }
 
@@ -147,6 +230,24 @@ public class MusicBandFieldsReader {
         return choicedMusicGenre;
     }
 
+    public MusicGenre readMusicGenre(String string) throws InputValueExeption {
+        String str;
+        MusicGenre choicedMusicGenre = null;
+            str = string.trim().toUpperCase();
+            if (!str.equals("")) {
+                for(MusicGenre musicGenre : MusicGenre.values()) {
+                    if (musicGenre.name().equals(str)) {
+                        choicedMusicGenre = musicGenre;
+                    }
+
+                }
+                if (choicedMusicGenre == null) {
+                    throw new InputValueExeption("Input Error\nGenre should be chosen from list");
+                }
+            }
+        return choicedMusicGenre;
+    }
+
     public Label readLabel() throws InputValueExeption {
         Label label = new Label();
         try {
@@ -158,4 +259,13 @@ public class MusicBandFieldsReader {
         return label;
     }
 
+    public Label readLabel(String string) throws InputValueExeption {
+        Label label = new Label();
+            label.setName(string.trim());
+        return label;
+    }
+
+    public void setReader(BufferedReader reader) {
+        this.reader = reader;
+    }
 }
