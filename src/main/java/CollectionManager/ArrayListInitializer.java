@@ -22,6 +22,9 @@ public class ArrayListInitializer {
         this.parser = parser;
     }
 
+    public LocalDate getInitializationDate() {
+        return initializationDate;
+    }
 
     public ArrayList<MusicBand> init() throws IOException {
         ArrayList<ArrayList<String>> data = parser.parseCSV(reader);
@@ -46,16 +49,20 @@ public class ArrayListInitializer {
             Integer singlesCount = 0;
             MusicGenre genre = null;
             Label label = null;
-            if (innerIterator.hasNext()) id = fieldsReader.readId(innerIterator.next());
-            if (innerIterator.hasNext()) name = fieldsReader.readName(innerIterator.next());
-            if (innerIterator.hasNext()) x = fieldsReader.readX(innerIterator.next());
-            if (innerIterator.hasNext()) { y = fieldsReader.readY(innerIterator.next()); coordinates = new Coordinates(x, y); }
-            if (innerIterator.hasNext()) creationDate = fieldsReader.readDate(innerIterator.next());
-            if (innerIterator.hasNext()) numberOfParticipants = fieldsReader.readNumberOfParticipants(innerIterator.next());
-            if (innerIterator.hasNext()) singlesCount = fieldsReader.readSinglesCount(innerIterator.next());
-            if (innerIterator.hasNext()) genre = fieldsReader.readMusicGenre(innerIterator.next());
-            if (innerIterator.hasNext()) label = fieldsReader.readLabel(innerIterator.next());
-            if (label != null) musicBands.add(new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, genre, label));
+            try {
+                if (innerIterator.hasNext()) id = fieldsReader.readId(innerIterator.next());
+                if (innerIterator.hasNext()) name = fieldsReader.readName(innerIterator.next());
+                if (innerIterator.hasNext()) x = fieldsReader.readX(innerIterator.next());
+                if (innerIterator.hasNext()) { y = fieldsReader.readY(innerIterator.next()); coordinates = new Coordinates(x, y); }
+                if (innerIterator.hasNext()) creationDate = fieldsReader.readDate(innerIterator.next());
+                if (innerIterator.hasNext()) numberOfParticipants = fieldsReader.readNumberOfParticipants(innerIterator.next());
+                if (innerIterator.hasNext()) singlesCount = fieldsReader.readSinglesCount(innerIterator.next());
+                if (innerIterator.hasNext()) genre = fieldsReader.readMusicGenre(innerIterator.next());
+                if (innerIterator.hasNext()) label = fieldsReader.readLabel(innerIterator.next());
+                if (label != null) musicBands.add(new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, genre, label));
+            } catch (InputValueExeption e) {
+                System.out.println(e.getMessage());
+            }
         }
         return musicBands;
     }

@@ -1,8 +1,10 @@
 package musicband;
 
+import CollectionManager.CSVConvertable;
+
 import java.time.LocalDate;
 
-public class MusicBand implements Comparable<MusicBand>{
+public class MusicBand implements Comparable<MusicBand>, CSVConvertable {
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -74,6 +76,19 @@ public class MusicBand implements Comparable<MusicBand>{
                 ", genre=" + genre +
                 ", label=" + label.getName() +
                 '}';
+    }
+
+    @Override
+    public String toCSV() {
+        return "" + id + ","
+                + name + ","
+                + coordinates.getX() + ","
+                + coordinates.getY() + ","
+                + creationDate + ","
+                + numberOfParticipants + ","
+                + singlesCount + ","
+                + genre + ","
+                + label.getName();
     }
 }
 

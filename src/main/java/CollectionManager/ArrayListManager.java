@@ -147,4 +147,8 @@ public class ArrayListManager {
         }
         else this.maxId = 1;
     }
+
+    public LocalDate getInitializationDate() {
+        return initializationDate;
+    }
 }

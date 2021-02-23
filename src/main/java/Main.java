@@ -1,4 +1,6 @@
+import CollectionManager.ArrayListInitializer;
 import CollectionManager.ArrayListManager;
+import CollectionManager.Parser;
 import Console.*;
 import Console.Console;
 import Console.commands.Command;
@@ -13,16 +15,31 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
+        ConsoleWriter writer = new ConsoleWriter();
         ArrayList<MusicBand> musicBandArrayList = new ArrayList<>();
+        LocalDate initializationDate = LocalDate.now();
+        File file = null;
+        try {
+            file = new File("C:\\Users\\Semyon\\Desktop\\lab5.txt");
+            BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            ArrayListInitializer arrayListInitializer = new ArrayListInitializer(fileReader, new MusicBandFieldsReader(), new Parser());
+            musicBandArrayList = arrayListInitializer.init();
+            if (arrayListInitializer.getInitializationDate() != null)  initializationDate = arrayListInitializer.getInitializationDate();
+        } catch (NullPointerException e) {
+            writer.write("Error with environment variable");
+        } catch (FileNotFoundException e) {
+            writer.write("File not found");
+        } catch (IOException e) {
+            writer.write("Unexpected error with initialization");
+        }
+
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-        //OutputStreamWriter writer = new OutputStreamWriter(System.out);
-        ConsoleWriter writer = new ConsoleWriter(); ///////////////////////////////////////
         CommandHandler.HistoryStorage historyStorage = new CommandHandler.HistoryStorage();
         MusicBandFieldsReader musicBandFieldsReader = new MusicBandFieldsReader(reader);
         InteractiveModeReader interactiveModeReader = new InteractiveModeReader(musicBandFieldsReader, writer);
         HashMap<String, Command> commands = new HashMap<>();
-        ArrayListManager arrayListManager = new ArrayListManager(musicBandArrayList, LocalDate.now());
+        ArrayListManager arrayListManager = new ArrayListManager(musicBandArrayList, initializationDate);
         commands.put("help", new HelpCommand());
         commands.put("info", new InfoCommand(writer, arrayListManager));
         commands.put("show", new ShowCommand(writer, arrayListManager));
@@ -30,6 +47,7 @@ public class Main {
         commands.put("update", new UpdateCommand(writer,arrayListManager, interactiveModeReader));
         commands.put("remove_by_id", new RemoveByIdCommand(arrayListManager));
         commands.put("clear", new ClearCommand(arrayListManager));
+        commands.put("save", new SaveCommand(arrayListManager,file));
         commands.put("exit", new ExitCommand());
         commands.put("insert_at", new InsertAtCommand(writer, arrayListManager, interactiveModeReader));
         commands.put("remove_last", new RemoveLastCommand(arrayListManager));
