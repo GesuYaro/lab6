@@ -8,17 +8,25 @@ import java.io.Writer;
 public class InteractiveModeReader implements Reader {
     private MusicBandFieldsReader reader;
     private ConsoleWriter writer;
+    private boolean interactiveMode;
 
     public InteractiveModeReader(MusicBandFieldsReader reader, ConsoleWriter writer) {
         this.reader = reader;
         this.writer = writer;
+        this.interactiveMode = true;
+    }
+
+    public InteractiveModeReader(MusicBandFieldsReader reader, ConsoleWriter writer, boolean interactiveMode) {
+        this.reader = reader;
+        this.writer = writer;
+        this.interactiveMode = interactiveMode;
     }
 
     public String readName() {
         String name;
         while(true) {
             try {
-                writer.write("Enter the name:");
+                if (interactiveMode) writer.write("Enter the name:");
                 name = reader.readName();
                 break;
             }
@@ -35,9 +43,9 @@ public class InteractiveModeReader implements Reader {
         Double y;
         while(true) {
             try {
-                writer.write("Enter X coordinate:");
+                if (interactiveMode) writer.write("Enter X coordinate:");
                 x = reader.readX();
-                writer.write("Enter Y coordinate");
+                if (interactiveMode) writer.write("Enter Y coordinate");
                 y = reader.readY();
                 break;
             }
@@ -52,7 +60,7 @@ public class InteractiveModeReader implements Reader {
         int numberOfParticipants;
         while(true) {
             try {
-                writer.write("Enter the number of participants:");
+                if (interactiveMode) writer.write("Enter the number of participants:");
                 numberOfParticipants = reader.readNumberOfParticipants();
                 break;
             } catch (InputValueExeption e) {
@@ -66,7 +74,7 @@ public class InteractiveModeReader implements Reader {
         Integer singlesCount;
         while(true) {
             try {
-                writer.write("Enter singles count:");
+                if (interactiveMode) writer.write("Enter singles count:");
                 singlesCount = reader.readSinglesCount();
                 break;
             } catch (InputValueExeption e) {
@@ -80,9 +88,11 @@ public class InteractiveModeReader implements Reader {
         MusicGenre musicGenre;
         while(true) {
             try {
-                writer.write("Choose the genre from the list:");
-                for (MusicGenre genre : MusicGenre.values()) {
-                    writer.write(genre.name());
+                if (interactiveMode) {
+                    writer.write("Choose the genre from the list:");
+                    for (MusicGenre genre : MusicGenre.values()) {
+                        writer.write(genre.name());
+                    }
                 }
                 musicGenre = reader.readMusicGenre();
                 break;
@@ -97,7 +107,7 @@ public class InteractiveModeReader implements Reader {
         Label label;
         while(true) {
             try {
-                writer.write("Enter the label name:");
+                if (interactiveMode) writer.write("Enter the label name:");
                 label = reader.readLabel();
                 break;
             } catch (InputValueExeption e) {

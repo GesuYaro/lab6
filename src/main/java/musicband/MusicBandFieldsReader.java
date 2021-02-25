@@ -19,7 +19,7 @@ public class MusicBandFieldsReader {
                 id = Long.parseLong(reader.readLine().trim());
             }
             catch (NumberFormatException e){
-                throw new InputValueExeption();
+                throw new InputValueExeption("ID must be long and greater than 0");
             }
             catch (IOException e) {
                 throw new InputValueExeption("Unexpected input error");
@@ -34,7 +34,7 @@ public class MusicBandFieldsReader {
             if (id <= 0) throw new InputValueExeption("ID must be long and greater than 0");
         }
         catch (NumberFormatException e){
-            throw new InputValueExeption();
+            throw new InputValueExeption("ID must be long and greater than 0");
         }
         return id;
     }

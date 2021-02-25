@@ -61,7 +61,7 @@ public class ArrayListInitializer {
                 if (innerIterator.hasNext()) label = fieldsReader.readLabel(innerIterator.next());
                 if (label != null) musicBands.add(new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, genre, label));
             } catch (InputValueExeption e) {
-                System.out.println(e.getMessage());
+                System.out.println("Error in the file: " + e.getMessage());
             }
         }
         return musicBands;

@@ -29,6 +29,7 @@ public class SaveCommand extends AbstractCommand {
             try {
                 writer.write(CSVString);
                 writer.flush();
+                consoleWriter.write("Saving successfully done");
             } catch (IOException e) {
                 consoleWriter.write("Unexpected save error");
             }
