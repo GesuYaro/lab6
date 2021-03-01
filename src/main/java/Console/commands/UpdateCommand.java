@@ -2,16 +2,14 @@ package Console.commands;
 
 import CollectionManager.ArrayListManager;
 import Console.ConsoleWriter;
-import Console.Exeptions.NoArgumentFoundExeption;
-import Console.Exeptions.NoSuchIdExeption;
+import Console.Exсeptions.NoArgumentFoundException;
+import Console.Exсeptions.NoSuchIdException;
 import Console.Reader;
 import musicband.Coordinates;
 import musicband.Label;
 import musicband.MusicBand;
 import musicband.MusicGenre;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.time.LocalDate;
 
 public class UpdateCommand extends AbstractCommand {
@@ -20,6 +18,11 @@ public class UpdateCommand extends AbstractCommand {
     private ArrayListManager listManager;
     private Reader reader;
 
+    /**
+     * @param writer Объект класса, выводящего в консоль
+     * @param listManager Менеджер коллекции
+     * @param reader Считыватель полей
+     */
     public UpdateCommand(ConsoleWriter writer, ArrayListManager listManager, Reader reader) {
         super("update id {element}", "update the value of the collection item whose id is equal to the given");
         this.writer = writer;
@@ -44,11 +47,11 @@ public class UpdateCommand extends AbstractCommand {
                 MusicBand musicBand = new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, musicGenre, label);
                 listManager.replace(id, musicBand);
             }
-            catch (NoSuchIdExeption e) {
+            catch (NoSuchIdException e) {
                 writer.write(e.getMessage());
             }
         } catch (NumberFormatException e) {
-            throw new NoArgumentFoundExeption();
+            throw new NoArgumentFoundException();
         }
         return CommandCode.DEFAULT;
     }

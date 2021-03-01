@@ -1,5 +1,8 @@
 package musicband;
 
+/**
+ * Координаты
+ */
 public class Coordinates {
     private Long x; //Максимальное значение поля: 3, Поле не может быть null
     private Double y; //Значение поля должно быть больше -859, Поле не может быть null
@@ -9,25 +12,18 @@ public class Coordinates {
         this.y = y;
     }
 
+    /**
+     * @return Координата X
+     */
     public Long getX() {
         return x;
     }
 
+    /**
+     * @return Координата Y
+     */
     public Double getY() {
         return y;
     }
 
-    //    public void setX(Long x) {
-//        if (x != null && x <= 3) {
-//            this.x = x;
-//        }
-//        else { throw new InputValueExeption("Максимальное значение поля: 3, Поле не может быть null"); }
-//    }
-//
-//    public void setY(Double y) {
-//        if (y != null && y > -859) {
-//            this.y = y;
-//        }
-//        else { throw new InputValueExeption("Значение поля должно быть больше -859, Поле не может быть null"); }
-//    }
 }

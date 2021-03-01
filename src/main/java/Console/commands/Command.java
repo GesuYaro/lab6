@@ -1,7 +1,10 @@
 package Console.commands;
 
+/**
+ * Интерфейс для команд
+ */
 public interface Command {
-    public CommandCode execute(String argument);
-    public String getName();
-    public String getDescription();
+    CommandCode execute(String argument);
+    String getName();
+    String getDescription();
 }

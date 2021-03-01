@@ -1,6 +1,6 @@
 package CollectionManager;
 
-import Console.ConsoleWriter;
+import Console.Exсeptions.InputValueException;
 import musicband.*;
 
 import java.io.IOException;
@@ -9,23 +9,39 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Класс инициализатор коллекции
+ */
 public class ArrayListInitializer {
     private Reader reader;
     private ArrayList<MusicBand> list;
     private LocalDate initializationDate;
     private Parser parser;
-    private MusicBandFieldsReader fieldsReader;
+    private MusicBandFieldsChecker fieldsReader;
 
-    public ArrayListInitializer(Reader reader, MusicBandFieldsReader fieldsReader, Parser parser) {
+    /**
+     * @param reader
+     * @param fieldsReader Считыватель полей
+     * @param parser Парсер
+     */
+    public ArrayListInitializer(Reader reader, MusicBandFieldsChecker fieldsReader, Parser parser) {
         this.reader = reader;
         this.fieldsReader = fieldsReader;
         this.parser = parser;
     }
 
+    /**
+     * @return Дата инициализации коллекции
+     */
     public LocalDate getInitializationDate() {
         return initializationDate;
     }
 
+    /**
+     * Инициализирует коллекцию
+     * @return Коллекция объектов MusicBand
+     * @throws IOException
+     */
     public ArrayList<MusicBand> init() throws IOException {
         ArrayList<ArrayList<String>> data = parser.parseCSV(reader);
         ArrayList<MusicBand> musicBands = new ArrayList<>();
@@ -60,7 +76,7 @@ public class ArrayListInitializer {
                 if (innerIterator.hasNext()) genre = fieldsReader.readMusicGenre(innerIterator.next());
                 if (innerIterator.hasNext()) label = fieldsReader.readLabel(innerIterator.next());
                 if (label != null) musicBands.add(new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, genre, label));
-            } catch (InputValueExeption e) {
+            } catch (InputValueException e) {
                 System.out.println("Error in the file: " + e.getMessage());
             }
         }

@@ -6,6 +6,9 @@ import Console.ConsoleWriter;
 
 import java.io.*;
 
+/**
+ * Класс команды save, сохраняющей коллекцию в файл
+ */
 public class SaveCommand extends AbstractCommand {
 
     ArrayListManager listManager;
@@ -13,12 +16,22 @@ public class SaveCommand extends AbstractCommand {
     ConsoleWriter consoleWriter;
     File file;
 
-    public SaveCommand(ArrayListManager listManager, File file) {
+    /**
+     * @param listManager Менеджер коллекции
+     * @param file Файл, в который будет сохрянятся коллекция
+     * @param consoleWriter Объект класса, выводящего в консоль
+     */
+    public SaveCommand(ArrayListManager listManager, File file, ConsoleWriter consoleWriter) {
         super("save", "save collection into file");
         this.listManager = listManager;
         this.file = file;
+        this.consoleWriter = consoleWriter;
     }
 
+    /**
+     * @param argument
+     * @return CommandCode.DEFAULT
+     */
     @Override
     public CommandCode execute(String argument) {
         try {

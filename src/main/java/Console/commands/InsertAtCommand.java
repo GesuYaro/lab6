@@ -2,23 +2,29 @@ package Console.commands;
 
 import CollectionManager.ArrayListManager;
 import Console.ConsoleWriter;
-import Console.Exeptions.NoArgumentFoundExeption;
+import Console.Exсeptions.NoArgumentFoundException;
 import Console.Reader;
 import musicband.Coordinates;
 import musicband.Label;
 import musicband.MusicBand;
 import musicband.MusicGenre;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.time.LocalDate;
 
+/**
+ * Класс команды insert_at, добаляющего новый объект в заданную позицию
+ */
 public class InsertAtCommand extends AbstractCommand {
 
     private ConsoleWriter writer;
     private ArrayListManager listManager;
     private Reader reader;
 
+    /**
+     * @param writer Объект класса, выводящего в консоль
+     * @param listManager Менеджер коллекции
+     * @param reader Считыватель полей
+     */
     public InsertAtCommand(ConsoleWriter writer, ArrayListManager listManager, Reader reader) {
         super("insert_at index {element}", "add a new item at a given position");
         this.writer = writer;
@@ -26,6 +32,10 @@ public class InsertAtCommand extends AbstractCommand {
         this.reader = reader;
     }
 
+    /**
+     * @param argument id элемента
+     * @return CommandCode.DEFAULT
+     */
     @Override
     public CommandCode execute(String argument) {
         try {
@@ -48,7 +58,7 @@ public class InsertAtCommand extends AbstractCommand {
                 writer.write("ERROR. Index is out of bounds");
             }
         } catch (NumberFormatException e) {
-            throw new NoArgumentFoundExeption();
+            throw new NoArgumentFoundException();
         }
         return CommandCode.DEFAULT;
     }

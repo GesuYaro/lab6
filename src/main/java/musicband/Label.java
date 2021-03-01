@@ -1,14 +1,21 @@
 package musicband;
 
-import java.util.Objects;
-
+/**
+ * Лейбл
+ */
 public class Label {
     private String name;
 
+    /**
+     * @return Название лейбла
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name Название лейбла
+     */
     public void setName(String name) {
         this.name = name;
     }

@@ -4,12 +4,15 @@ import musicband.Coordinates;
 import musicband.Label;
 import musicband.MusicGenre;
 
+/**
+ * Интерфейс для считывателя полей
+ */
 public interface Reader {
-    public String readName();
-    public Coordinates readCoordinates();
-    public int readNumberOfParticipants();
-    public Integer readSinglesCount();
-    public MusicGenre readMusicGenre();
-    public Label readlabel();
+    String readName();
+    Coordinates readCoordinates();
+    int readNumberOfParticipants();
+    Integer readSinglesCount();
+    MusicGenre readMusicGenre();
+    Label readlabel();
 
 }

@@ -1,16 +1,16 @@
 package Console;
 
-import Console.Exeptions.NoArgumentFoundExeption;
-import Console.Exeptions.NoSuchCommandExeption;
-import Console.commands.Command;
+import Console.Exсeptions.NoArgumentFoundException;
+import Console.Exсeptions.NoSuchCommandException;
 import Console.commands.CommandCode;
-import Console.CommandHandler;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.Writer;
 
+/**
+ * Класс консоли
+ * Принимает команды от пользователя и вызывает инвокер
+ */
 public class Console implements Runnable {
 
     private CommandHandler commandHandler;
@@ -18,12 +18,21 @@ public class Console implements Runnable {
     private ConsoleWriter writer;
 
 
+    /**
+     * @param commandHandler Обработчик команд, он же Invoker
+     * @param reader Входной поток
+     * @param writer выходной поток
+     */
     public Console(CommandHandler commandHandler, BufferedReader reader, ConsoleWriter writer) {
         this.commandHandler = commandHandler;
         this.reader = reader;
         this.writer = writer;
     }
 
+    /**
+     * Запускает консоль
+     * Останавливается, если результат выполнения команды - CommandCode.EXIT
+     */
     @Override
     public void run() {
         CommandCode commandCode;
@@ -36,10 +45,10 @@ public class Console implements Runnable {
             if (userCommand.length > 1) userCommand[1] = userCommand[1].trim();
             try {
                 commandCode = commandHandler.execute(userCommand);
-            } catch (NoArgumentFoundExeption e) {
+            } catch (NoArgumentFoundException e) {
                 writer.write(e.getMessage());
             }
-            } catch (NoSuchCommandExeption e) {
+            } catch (NoSuchCommandException e) {
                 writer.write(e.getMessage());
             }
             catch (IOException e) {
@@ -65,6 +74,10 @@ public class Console implements Runnable {
 //        this.reader = reader;
 //    }
 
+    /**
+     * Выводит текст в консоль
+     * @param string Текст, который нужно вывести
+     */
     public void print(String string) {
         writer.write(string);
 

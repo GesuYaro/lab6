@@ -3,15 +3,18 @@ package Console.commands;
 import CollectionManager.ArrayListManager;
 import Console.*;
 import Console.Console;
-import Console.Exeptions.NoArgumentFoundExeption;
-import Console.Exeptions.ReadOrWriteFileExeption;
-import musicband.MusicBandFieldsReader;
+import Console.Exсeptions.NoArgumentFoundException;
+import Console.Exсeptions.ReadOrWriteFileException;
+import musicband.MusicBandFieldsChecker;
 import Console.CommandHandler.HistoryStorage;
 
 import java.io.*;
 import java.util.HashMap;
 
 
+/**
+ * Класс команды execute_script, исполняющей скрипт
+ */
 public class ExecuteScriptCommand extends AbstractCommand {
 
     private ConsoleWriter writer;
@@ -19,6 +22,11 @@ public class ExecuteScriptCommand extends AbstractCommand {
     private ArrayListManager arrayListManager;
     private HistoryStorage historyStorage;
 
+    /**
+     * @param writer Объект класса, осуществляющего вывод в консоль
+     * @param listManager Менеджер коллекции
+     * @param historyStorage Объект класса, хранящего историю команд
+     */
     public ExecuteScriptCommand(ConsoleWriter writer, ArrayListManager listManager, HistoryStorage historyStorage){
         super("execute_script file_name", "Execute script from the file");
         this.writer = writer;
@@ -27,22 +35,30 @@ public class ExecuteScriptCommand extends AbstractCommand {
         this.historyStorage = historyStorage;
     }
 
+    /**
+     * Конструктор для добавления команды в help
+     */
     public ExecuteScriptCommand() {
         super("execute_script file_name", "Execute script from the file");
     }
 
 
+    /**
+     * @param argument Название файла скрипта
+     * @return CommandCode.DEFAULT
+     * @throws NoArgumentFoundException
+     */
     @Override
     public CommandCode execute(String argument) {
         String path = argument.trim();
-        if (path.equals("")) throw new NoArgumentFoundExeption();
+        if (path.equals("")) throw new NoArgumentFoundException();
         File file = new File(path);
         try {
             if (!file.exists()) throw new FileNotFoundException();
-            if (!file.canRead()) throw new ReadOrWriteFileExeption();
+            if (!file.canRead()) throw new ReadOrWriteFileException();
             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            MusicBandFieldsReader fieldsReader = new MusicBandFieldsReader(fileReader);
-            InteractiveModeReader scriptModeReader = new InteractiveModeReader(fieldsReader, writer, false);
+            MusicBandFieldsChecker fieldsReader = new MusicBandFieldsChecker(fileReader);
+            FieldsReader scriptModeReader = new FieldsReader(fieldsReader, writer, false);
             HashMap<String, Command> commands = new HashMap<>();
             commands.put("help", new HelpCommand());
             commands.put("info", new InfoCommand(writer, arrayListManager));
@@ -51,7 +67,7 @@ public class ExecuteScriptCommand extends AbstractCommand {
             commands.put("update", new UpdateCommand(writer,arrayListManager, scriptModeReader));
             commands.put("remove_by_id", new RemoveByIdCommand(arrayListManager));
             commands.put("clear", new ClearCommand(arrayListManager));
-            commands.put("save", new SaveCommand(arrayListManager,file));
+            commands.put("save", new SaveCommand(arrayListManager,file, writer));
             commands.put("exit", new ExitCommand());
             commands.put("insert_at", new InsertAtCommand(writer, arrayListManager, scriptModeReader));
             commands.put("remove_last", new RemoveLastCommand(arrayListManager));
@@ -71,7 +87,7 @@ public class ExecuteScriptCommand extends AbstractCommand {
             }
         } catch (FileNotFoundException | SecurityException e) {
             writer.write("Can't access the file " + path);
-        } catch (ReadOrWriteFileExeption e) {
+        } catch (ReadOrWriteFileException e) {
             writer.write("Access denied. Can't read the file");
         }
         return CommandCode.DEFAULT;
