@@ -100,7 +100,7 @@ public class MusicBand implements Comparable<MusicBand>, CSVConvertible {
      */
     @Override
     public int compareTo(MusicBand o) {
-        return Long.compare(this.getId(), o.getId());
+        return this.getName().compareTo(o.getName());
     }
 
     /**

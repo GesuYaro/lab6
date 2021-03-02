@@ -26,20 +26,23 @@ public class Main {
         String path;
         //System.out.println(path);
         try {
-            path = System.getenv("LAB5_PATH").replace("\u202A", "");
-            file = new File(path);
-            if (!file.exists()) file.createNewFile();
-            if (!file.canRead() || !file.canWrite()) throw new ReadOrWriteFileException();
-            BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            ArrayListInitializer arrayListInitializer = new ArrayListInitializer(fileReader, new MusicBandFieldsChecker(), new Parser());
-            musicBandArrayList = arrayListInitializer.init();
-            if (arrayListInitializer.getInitializationDate() != null)  initializationDate = arrayListInitializer.getInitializationDate();
-        } catch (NullPointerException e) {
-            writer.write("Error with environment variable");
+            path = System.getenv("LAB5_PATH");
+            if (path != null) {
+                path = path.replace("\u202A", "");
+                file = new File(path);
+                if (!file.exists()) file.createNewFile();
+                if (file.canRead() && file.canWrite()) {
+                    BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                    ArrayListInitializer arrayListInitializer = new ArrayListInitializer(fileReader, new MusicBandFieldsChecker(), new Parser());
+                    musicBandArrayList = arrayListInitializer.init();
+                    if (arrayListInitializer.getInitializationDate() != null)
+                        initializationDate = arrayListInitializer.getInitializationDate();
+                }
+                else writer.write("Access denied. Can't read or write file");
+            }
+            else writer.write("Error with environment variable");
         } catch (SecurityException e) {
             writer.write("File not found. Access denied. Can't create a new file.");
-        } catch (ReadOrWriteFileException e) {
-            writer.write("Access denied. Can't read or write file");
         } catch (FileNotFoundException e) {
             writer.write("File not found");
         } catch (IOException e) {
@@ -53,6 +56,10 @@ public class Main {
         FieldsReader fieldsReader = new FieldsReader(musicBandFieldsChecker, writer);
         HashMap<String, Command> commands = new HashMap<>();
         ArrayListManager arrayListManager = new ArrayListManager(musicBandArrayList, initializationDate);
+        if (arrayListManager.containsRepeatingId()) {  // проверяем, есть ли объекты с одинаковым id
+            writer.write("Error. Collection contains repeating id");
+            arrayListManager.clear();
+        }
         commands.put("help", new HelpCommand());
         commands.put("info", new InfoCommand(writer, arrayListManager));
         commands.put("show", new ShowCommand(writer, arrayListManager));

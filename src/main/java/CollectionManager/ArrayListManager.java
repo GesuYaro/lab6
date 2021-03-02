@@ -228,4 +228,21 @@ public class ArrayListManager {
     public LocalDate getInitializationDate() {
         return initializationDate;
     }
+
+    /**
+     * @return true, если в коллекции обнаружены элементы с одинаковым id
+     */
+    public boolean containsRepeatingId() {
+        boolean isRepeating = false;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (ListIterator<MusicBand> iterator = arrayList.listIterator(); iterator.hasNext(); ) {
+            MusicBand mb = iterator.next();
+            if (ids.contains(mb.getId())) {
+                isRepeating = true;
+                break;
+            }
+            ids.add(mb.getId());
+        }
+        return isRepeating;
+    }
 }

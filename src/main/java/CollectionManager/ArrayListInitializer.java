@@ -21,12 +21,12 @@ public class ArrayListInitializer {
 
     /**
      * @param reader
-     * @param fieldsReader Считыватель полей
+     * @param fieldsChecker Считыватель полей
      * @param parser Парсер
      */
-    public ArrayListInitializer(Reader reader, MusicBandFieldsChecker fieldsReader, Parser parser) {
+    public ArrayListInitializer(Reader reader, MusicBandFieldsChecker fieldsChecker, Parser parser) {
         this.reader = reader;
-        this.fieldsReader = fieldsReader;
+        this.fieldsReader = fieldsChecker;
         this.parser = parser;
     }
 

@@ -40,7 +40,9 @@ public class Console implements Runnable {
         commandCode = CommandCode.DEFAULT;
         do {
             try {
-            userCommand = reader.readLine().trim().split(" ", 2);
+            userCommand = reader.readLine()
+                    .trim()
+                    .split(" ", 2);
             userCommand[0] = userCommand[0].trim();
             if (userCommand.length > 1) userCommand[1] = userCommand[1].trim();
             try {
