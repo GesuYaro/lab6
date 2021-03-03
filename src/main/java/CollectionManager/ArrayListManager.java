@@ -214,9 +214,11 @@ public class ArrayListManager {
      */
     public void increaseMaxId() {
         if (arrayList.size() > 0) {
-            ArrayList<MusicBand> clone = ((ArrayList<MusicBand>) arrayList.clone());
-            clone.sort((o1, o2) -> o1.compareTo(o2));
-            this.maxId = clone.get(clone.size() - 1).getId() + 1;
+            for (MusicBand mb : arrayList) {
+                if (mb.getId() > this.maxId) {
+                    this.maxId = mb.getId() + 1;
+                }
+            }
         }
         else this.maxId = 1;
     }
@@ -234,7 +236,7 @@ public class ArrayListManager {
      */
     public boolean containsRepeatingId() {
         boolean isRepeating = false;
-        ArrayList<Long> ids = new ArrayList<>();
+        HashSet<Long> ids = new HashSet<>();
         for (ListIterator<MusicBand> iterator = arrayList.listIterator(); iterator.hasNext(); ) {
             MusicBand mb = iterator.next();
             if (ids.contains(mb.getId())) {

@@ -36,24 +36,28 @@ public class FieldsReader implements Reader {
         this.interactiveMode = interactiveMode;
     }
 
+
+    private Object read(String message, CheckReader checkReader) {
+        Object obj;
+        while(true) {
+            try {
+                if (interactiveMode) writer.write(message);
+                obj = checkReader.read();
+                break;
+            } catch (InputValueException e) {
+                writer.write(e.getMessage());
+            }
+        }
+        return obj;
+    }
+
     /**
      * @return Корректное название, введенное пользователем
      */
     public String readName() {
-        String name;
-        while(true) {
-            try {
-                if (interactiveMode) writer.write("Enter the name:");
-                name = checker.readName();
-                break;
-            }
-            catch (InputValueException e) {
-                writer.write(e.getMessage());
-
-            }
-        }
-        return name;
+        return (String) read("Enter the name:", checker::readName);
     }
+
 
     /**
      * @return Корректные координаты, введенные пользователем
@@ -61,24 +65,8 @@ public class FieldsReader implements Reader {
     public Coordinates readCoordinates() {
         Long x;
         Double y;
-        while (true) {
-            try {
-                if (interactiveMode) writer.write("Enter X coordinate:");
-                x = checker.readX();
-                break;
-            } catch (InputValueException e) {
-                writer.write(e.getMessage());
-            }
-        }
-        while (true) {
-            try {
-                if (interactiveMode) writer.write("Enter Y coordinate");
-                y = checker.readY();
-                break;
-            } catch (InputValueException e) {
-                writer.write(e.getMessage());
-            }
-        }
+        x = (Long) read("Enter X coordinate:", checker::readX);
+        y = (Double) read("Enter Y coordinate:", checker::readY);
         return new Coordinates(x, y);
     }
 
@@ -86,73 +74,52 @@ public class FieldsReader implements Reader {
      * @return Корректное количество участников, введенное пользователем
      */
     public int readNumberOfParticipants() {
-        int numberOfParticipants;
-        while(true) {
-            try {
-                if (interactiveMode) writer.write("Enter the number of participants:");
-                numberOfParticipants = checker.readNumberOfParticipants();
-                break;
-            } catch (InputValueException e) {
-                writer.write(e.getMessage());
-            }
-        }
-        return numberOfParticipants;
+        return (int) read("Enter the number of participants:", checker::readNumberOfParticipants);
     }
 
     /**
      * @return Корректное количество синглов, введенное пользователем
      */
     public Integer readSinglesCount() {
-        Integer singlesCount;
-        while(true) {
-            try {
-                if (interactiveMode) writer.write("Enter singles count:");
-                singlesCount = checker.readSinglesCount();
-                break;
-            } catch (InputValueException e) {
-                writer.write(e.getMessage());
-            }
-        }
-        return singlesCount;
+        return (Integer) read("Enter the singles count:", checker::readSinglesCount);
     }
 
     /**
      * @return Корректный жанр, введенный пользователем
      */
     public MusicGenre readMusicGenre() {
-        MusicGenre musicGenre;
-        while(true) {
-            try {
-                if (interactiveMode) {
-                    writer.write("Choose the genre from the list:");
-                    for (MusicGenre genre : MusicGenre.values()) {
-                        writer.write(genre.name());
-                    }
-                }
-                musicGenre = checker.readMusicGenre();
-                break;
-            } catch (InputValueException e) {
-                writer.write(e.getMessage());
-            }
+        String message = "Choose the genre from the list:";
+        for (MusicGenre genre : MusicGenre.values()) {
+            message += "\n" + genre.name();
         }
+        MusicGenre musicGenre = (MusicGenre) this.read(message, checker::readMusicGenre);
         return musicGenre;
     }
+
+//    public MusicGenre readMusicGenre() {
+//        MusicGenre musicGenre;
+//        while(true) {
+//            try {
+//                if (interactiveMode) {
+//                    writer.write("Choose the genre from the list:");
+//                    for (MusicGenre genre : MusicGenre.values()) {
+//                        writer.write(genre.name());
+//                    }
+//                }
+//                musicGenre = checker.readMusicGenre();
+//                break;
+//            } catch (InputValueException e) {
+//                writer.write(e.getMessage());
+//            }
+//        }
+//        return musicGenre;
+//    }
 
     /**
      * @return Корректный лейбл, введенный пользователем
      */
     public Label readlabel() {
-        Label label;
-        while(true) {
-            try {
-                if (interactiveMode) writer.write("Enter the label name:");
-                label = checker.readLabel();
-                break;
-            } catch (InputValueException e) {
-                writer.write(e.getMessage());
-            }
-        }
-        return label;
+        return (Label) read("Enter the label name:", checker::readLabel);
     }
 
 }
