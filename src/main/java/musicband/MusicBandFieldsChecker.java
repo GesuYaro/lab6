@@ -1,7 +1,7 @@
 package musicband;
 
 
-import Console.Exсeptions.InputValueException;
+import console.exсeptions.InputValueException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -70,11 +70,13 @@ public class MusicBandFieldsChecker {
         String name;
         String prename;
             try {
-                prename = reader.readLine().trim();
-                if (!prename.equals("")) {
-                    name = prename;
-                }
-                else throw new InputValueException("Input Error\nField can't be null, string can't be empty");
+                prename = reader.readLine();
+                if (prename != null) {
+                    prename = prename.trim();
+                    if (!prename.equals("")) {
+                        name = prename;
+                    } else throw new InputValueException("Input Error\nField can't be null, string can't be empty");
+                } else throw new InputValueException("Input Error\nField can't be null, string can't be empty");
             }
             catch (IOException e) {
                 throw new InputValueException("Unexpected input error");
@@ -93,6 +95,7 @@ public class MusicBandFieldsChecker {
         prename = string.trim();
         if (!prename.equals("")) {
             name = prename;
+            name = name.replaceAll("%COMMA%", ",");
         }
         else throw new InputValueException("Input Error\nField can't be null, string can't be empty");
         return name;
@@ -105,8 +108,11 @@ public class MusicBandFieldsChecker {
     public long readX() throws InputValueException {
         long x;
         try {
-            x = Long.parseLong(reader.readLine().trim());
-            if (x > 3) throw new InputValueException("Field can't be greater than 3");
+            String string = reader.readLine();
+            if (string != null) {
+                x = Long.parseLong(string.trim());
+                if (x > 3) throw new InputValueException("Field can't be greater than 3");
+            } else throw new InputValueException("Input Error\nField can't be null");
         }
         catch (NumberFormatException e){
             throw new InputValueException("Input Error\nField should be long");
@@ -141,8 +147,11 @@ public class MusicBandFieldsChecker {
     public double readY() throws InputValueException {
         double y;
             try {
-                y = Double.parseDouble(reader.readLine().trim());
-                if (y < -859) throw new InputValueException("Field should be greater than -859");
+                String string = reader.readLine();
+                if (string != null) {
+                    y = Double.parseDouble(string.trim());
+                    if (y < -859) throw new InputValueException("Field should be greater than -859");
+                } else throw new InputValueException("Input Error\nField can't be null");
             }
             catch (NumberFormatException e){
                 throw new InputValueException("Input Error\nField should be double");
@@ -187,7 +196,10 @@ public class MusicBandFieldsChecker {
     public LocalDate readDate() throws InputValueException {
         LocalDate date;
         try {
-            date = LocalDate.parse(reader.readLine().trim());
+            String string = reader.readLine();
+            if (string != null) {
+                date = LocalDate.parse(string.trim());
+            } else throw new InputValueException("Input Error\nField can't be null");
         } catch (DateTimeParseException e) {
             throw new InputValueException("Input Error\nEnter date in YYYY-MM-DD format");
         } catch (IOException e) {
@@ -218,8 +230,11 @@ public class MusicBandFieldsChecker {
     public int readNumberOfParticipants() throws InputValueException {
         int numberOfParticipants;
             try {
-                numberOfParticipants = Integer.parseInt(reader.readLine().trim());
-                if (numberOfParticipants <= 0) throw new NumberFormatException();
+                String string = reader.readLine();
+                if (string != null) {
+                    numberOfParticipants = Integer.parseInt(string.trim());
+                    if (numberOfParticipants <= 0) throw new InputValueException("Input Error\nEnter the natural number");
+                } else throw new InputValueException("Input Error\nField can't be null");
             }
             catch (NumberFormatException e){
                 throw new InputValueException("Input Error\nEnter the natural number");
@@ -254,9 +269,12 @@ public class MusicBandFieldsChecker {
     public Integer readSinglesCount() throws InputValueException {
         Integer singlesCount = null;
             try {
-                String str = reader.readLine().trim();
-                if (!str.equals("")) {
-                    singlesCount = Integer.parseInt(str);
+                String str = reader.readLine();
+                if (str != null) {
+                    str = str.trim();
+                    if (!str.equals("")) {
+                        singlesCount = Integer.parseInt(str);
+                    }
                 }
             }
             catch (NumberFormatException e){
@@ -295,16 +313,19 @@ public class MusicBandFieldsChecker {
         String str;
         MusicGenre choicedMusicGenre = null;
             try {
-                str = reader.readLine().trim().toUpperCase();
-                if (!str.equals("")) {
-                    for(MusicGenre musicGenre : MusicGenre.values()) {
-                        if (musicGenre.name().equals(str)) {
-                            choicedMusicGenre = musicGenre;
-                        }
+                str = reader.readLine();
+                if (str != null) {
+                    str = str.trim().toUpperCase();
+                    if (!str.equals("")) {
+                        for (MusicGenre musicGenre : MusicGenre.values()) {
+                            if (musicGenre.name().equals(str)) {
+                                choicedMusicGenre = musicGenre;
+                            }
 
-                    }
-                    if (choicedMusicGenre == null) {
-                        throw new InputValueException("Input Error\nGenre should be chosen from list");
+                        }
+                        if (choicedMusicGenre == null) {
+                            throw new InputValueException("Input Error\nGenre should be chosen from list");
+                        }
                     }
                 }
             }
@@ -345,7 +366,10 @@ public class MusicBandFieldsChecker {
     public Label readLabel() throws InputValueException {
         Label label = new Label();
         try {
-            label.setName(reader.readLine().trim());
+            String string = reader.readLine();
+            if (string != null) {
+                label.setName(string.trim());
+            }
         }
         catch (IOException e) {
             throw new InputValueException("Unexpected input error");
@@ -360,6 +384,7 @@ public class MusicBandFieldsChecker {
      */
     public Label readLabel(String string) throws InputValueException {
         Label label = new Label();
+        string = string.replaceAll("%COMMA%", ",");
             label.setName(string.trim());
         return label;
     }

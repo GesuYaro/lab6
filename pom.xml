@@ -40,7 +40,6 @@
                     <archive>
                         <manifest>
                             <mainClass>Main</mainClass>
-<!--                            <addClassPath>true</addClassPath>-->
                         </manifest>
                     </archive>
                 </configuration>

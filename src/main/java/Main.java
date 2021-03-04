@@ -1,11 +1,10 @@
-import CollectionManager.ArrayListInitializer;
-import CollectionManager.ArrayListManager;
-import CollectionManager.Parser;
-import Console.*;
-import Console.Console;
-import Console.Exсeptions.ReadOrWriteFileException;
-import Console.commands.Command;
-import Console.commands.*;
+import collectionManager.ArrayListInitializer;
+import collectionManager.ArrayListManager;
+import collectionManager.Parser;
+import console.*;
+import console.Console;
+import console.commands.Command;
+import console.commands.*;
 import musicband.MusicBand;
 import musicband.MusicBandFieldsChecker;
 
@@ -13,6 +12,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 /**
  * Главный класс, в котором создаются объекты и запускается приложение
@@ -40,7 +40,7 @@ public class Main {
                 }
                 else writer.write("Access denied. Can't read or write file");
             }
-            else writer.write("Error with environment variable");
+            else writer.write("Error with environment variable. Variable LAB5_PATH not found");
         } catch (SecurityException e) {
             writer.write("File not found. Access denied. Can't create a new file.");
         } catch (FileNotFoundException e) {

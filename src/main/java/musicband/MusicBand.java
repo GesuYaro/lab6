@@ -1,6 +1,6 @@
 package musicband;
 
-import CollectionManager.CSVConvertible;
+import collectionManager.CSVConvertible;
 
 import java.time.LocalDate;
 
@@ -125,15 +125,17 @@ public class MusicBand implements Comparable<MusicBand>, CSVConvertible {
      */
     @Override
     public String toCSV() {
+        String csvName = name.replaceAll(",", "%COMMA%");
+        String csvLabelName = label.getName().replaceAll(",", "%COMMA%");
         return "" + id + ","
-                + name + ","
+                + csvName + ","
                 + coordinates.getX() + ","
                 + coordinates.getY() + ","
                 + creationDate + ","
                 + numberOfParticipants + ","
                 + ((singlesCount != null) ? singlesCount : "") + ","
                 + ((genre != null) ? genre : "") + ","
-                + label.getName();
+                + csvLabelName;
     }
 }
 
