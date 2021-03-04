@@ -40,16 +40,16 @@ public class Console implements Runnable {
         commandCode = CommandCode.DEFAULT;
         do {
             try {
-            userCommand = reader.readLine()
-                    .trim()
-                    .split(" ", 2);
-            userCommand[0] = userCommand[0].trim();
-            if (userCommand.length > 1) userCommand[1] = userCommand[1].trim();
-            try {
-                commandCode = commandHandler.execute(userCommand);
-            } catch (NoArgumentFoundException e) {
-                writer.write(e.getMessage());
-            }
+                userCommand = reader.readLine()
+                        .trim()
+                        .split(" ", 2);
+                userCommand[0] = userCommand[0].trim();
+                if (userCommand.length > 1) userCommand[1] = userCommand[1].trim();
+                try {
+                    commandCode = commandHandler.execute(userCommand);
+                } catch (NoArgumentFoundException e) {
+                    writer.write(e.getMessage());
+                }
             } catch (NoSuchCommandException e) {
                 writer.write(e.getMessage());
             }
