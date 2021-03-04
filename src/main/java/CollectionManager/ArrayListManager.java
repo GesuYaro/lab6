@@ -215,7 +215,7 @@ public class ArrayListManager {
     public void increaseMaxId() {
         if (arrayList.size() > 0) {
             for (MusicBand mb : arrayList) {
-                if (mb.getId() > this.maxId) {
+                if (mb.getId() >= this.maxId) {
                     this.maxId = mb.getId() + 1;
                 }
             }

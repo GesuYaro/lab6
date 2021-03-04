@@ -37,8 +37,8 @@ public class FieldsReader implements Reader {
     }
 
 
-    private Object read(String message, CheckReader checkReader) {
-        Object obj;
+    private <T> T read(String message, CheckReader<T> checkReader) {
+        T obj;
         while(true) {
             try {
                 if (interactiveMode) writer.write(message);
@@ -55,7 +55,7 @@ public class FieldsReader implements Reader {
      * @return Корректное название, введенное пользователем
      */
     public String readName() {
-        return (String) read("Enter the name:", checker::readName);
+        return read("Enter the name:", checker::readName);
     }
 
 
@@ -65,8 +65,8 @@ public class FieldsReader implements Reader {
     public Coordinates readCoordinates() {
         Long x;
         Double y;
-        x = (Long) read("Enter X coordinate:", checker::readX);
-        y = (Double) read("Enter Y coordinate:", checker::readY);
+        x = read("Enter X coordinate:", checker::readX);
+        y = read("Enter Y coordinate:", checker::readY);
         return new Coordinates(x, y);
     }
 
@@ -74,14 +74,14 @@ public class FieldsReader implements Reader {
      * @return Корректное количество участников, введенное пользователем
      */
     public int readNumberOfParticipants() {
-        return (int) read("Enter the number of participants:", checker::readNumberOfParticipants);
+        return read("Enter the number of participants:", checker::readNumberOfParticipants);
     }
 
     /**
      * @return Корректное количество синглов, введенное пользователем
      */
     public Integer readSinglesCount() {
-        return (Integer) read("Enter the singles count:", checker::readSinglesCount);
+        return read("Enter the singles count:", checker::readSinglesCount);
     }
 
     /**
@@ -92,7 +92,7 @@ public class FieldsReader implements Reader {
         for (MusicGenre genre : MusicGenre.values()) {
             message += "\n" + genre.name();
         }
-        MusicGenre musicGenre = (MusicGenre) this.read(message, checker::readMusicGenre);
+        MusicGenre musicGenre = this.read(message, checker::readMusicGenre);
         return musicGenre;
     }
 
@@ -119,7 +119,7 @@ public class FieldsReader implements Reader {
      * @return Корректный лейбл, введенный пользователем
      */
     public Label readlabel() {
-        return (Label) read("Enter the label name:", checker::readLabel);
+        return read("Enter the label name:", checker::readLabel);
     }
 
 }
