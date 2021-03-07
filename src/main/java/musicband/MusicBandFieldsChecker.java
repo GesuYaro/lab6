@@ -324,7 +324,7 @@ public class MusicBandFieldsChecker {
 
                         }
                         if (choicedMusicGenre == null) {
-                            throw new InputValueException("Input Error\nGenre should be chosen from list");
+                            throw new InputValueException("Input Error\nGenre should be chosen from the list");
                         }
                     }
                 }
@@ -344,18 +344,20 @@ public class MusicBandFieldsChecker {
     public MusicGenre readMusicGenre(String string) throws InputValueException {
         String str;
         MusicGenre choicedMusicGenre = null;
+        if (string != null) {
             str = string.trim().toUpperCase();
             if (!str.equals("")) {
-                for(MusicGenre musicGenre : MusicGenre.values()) {
+                for (MusicGenre musicGenre : MusicGenre.values()) {
                     if (musicGenre.name().equals(str)) {
                         choicedMusicGenre = musicGenre;
                     }
 
                 }
                 if (choicedMusicGenre == null) {
-                    throw new InputValueException("Input Error\nGenre should be chosen from list");
+                    throw new InputValueException("Input Error\nGenre should be chosen from the list");
                 }
             }
+        }
         return choicedMusicGenre;
     }
 

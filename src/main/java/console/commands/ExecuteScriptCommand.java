@@ -3,6 +3,7 @@ package console.commands;
 import collectionManager.ArrayListManager;
 import console.*;
 import console.Console;
+import console.exсeptions.IncorrectScriptException;
 import console.exсeptions.NoArgumentFoundException;
 import musicband.MusicBandFieldsChecker;
 import console.CommandHandler.HistoryStorage;
@@ -92,6 +93,8 @@ public class ExecuteScriptCommand extends AbstractCommand {
                     Console console = new Console(commandHandler, fileReader, writer);
                     try {
                         console.run();
+                    } catch (IncorrectScriptException e) {
+                        writer.write(e.getMessage());
                     } catch (NullPointerException | StackOverflowError e) {
                         writer.write("Error. Incorrect Script");
                     }
@@ -101,7 +104,7 @@ public class ExecuteScriptCommand extends AbstractCommand {
             } else {
                 writer.write("Access denied. Can't read the file");
             }
-        }catch (FileNotFoundException | SecurityException e) {
+        } catch (FileNotFoundException | SecurityException e) {
             writer.write("Can't access the file " + path);
         }
         scripts.clear();

@@ -1,5 +1,6 @@
 package console;
 
+import console.exсeptions.IncorrectScriptException;
 import console.exсeptions.InputValueException;
 import musicband.*;
 
@@ -37,15 +38,24 @@ public class FieldsReader implements Reader {
     }
 
 
-    private <T> T read(String message, CheckReader<T> checkReader) {
+    private <T> T read(String message, CheckReader<T> checkReader) throws IncorrectScriptException {
         T obj;
-        while(true) {
+        if (interactiveMode) {
+            while (true) {
+                try {
+                    writer.write(message);
+                    obj = checkReader.read();
+                    break;
+                } catch (InputValueException e) {
+                    writer.write(e.getMessage());
+                }
+            }
+        }
+        else {
             try {
-                if (interactiveMode) writer.write(message);
                 obj = checkReader.read();
-                break;
             } catch (InputValueException e) {
-                writer.write(e.getMessage());
+                throw new IncorrectScriptException();
             }
         }
         return obj;
