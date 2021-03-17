@@ -31,6 +31,7 @@ collectionManager\Parser.class
 console\commands\Command.class
 musicband\MusicBandFieldsChecker.class
 console\commands\InfoCommand.class
+console\exсeptions\IncorrectScriptException.class
 console\CheckReader.class
 console\CommandHandler$HistoryStorage.class
 console\CommandHandler.class
