@@ -95,7 +95,7 @@ public class MusicBandFieldsChecker {
         prename = string.trim();
         if (!prename.equals("")) {
             name = prename;
-            name = name.replaceAll("%COMMA%", ",");
+            //name = name.replaceAll("%COMMA%", ",");
         }
         else throw new InputValueException("Input Error\nField can't be null, string can't be empty");
         return name;
@@ -386,7 +386,7 @@ public class MusicBandFieldsChecker {
      */
     public Label readLabel(String string) throws InputValueException {
         Label label = new Label();
-        string = string.replaceAll("%COMMA%", ",");
+        //string = string.replaceAll("%COMMA%", ",");
             label.setName(string.trim());
         return label;
     }

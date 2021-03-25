@@ -3,6 +3,9 @@ package console.commands;
 import collectionManager.ArrayListManager;
 import collectionManager.CollectionToCSV;
 import console.ConsoleWriter;
+import musicband.MusicBand;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import java.io.*;
 
@@ -36,11 +39,17 @@ public class SaveCommand extends AbstractCommand {
     public CommandCode execute(String argument) {
         try {
             writer = new OutputStreamWriter(new FileOutputStream(file));
-            String CSVString = "";
-            CSVString += listManager.getInitializationDate().toString() + "\n";
-            CSVString += CollectionToCSV.toCSV(listManager.getArrayList());
+//            String CSVString = "";
+//            CSVString += listManager.getInitializationDate().toString() + "\n";
+//            CSVString += CollectionToCSV.toCSV(listManager.getArrayList());
             try {
-                writer.write(CSVString);
+//                writer.write(CSVString);
+//                writer.flush();
+                writer.write(listManager.getInitializationDate().toString() + "\n");
+                CSVPrinter printer = new CSVPrinter(writer, CSVFormat.RFC4180);
+                for (MusicBand musicBand: listManager.getArrayList()) {
+                    printer.printRecord(musicBand.getId(), musicBand.getName(), musicBand.getCoordinates().getX(), musicBand.getCoordinates().getY(), musicBand.getCreationDate(), musicBand.getNumberOfParticipants(), ((musicBand.getSinglesCount()) != null) ? musicBand.getSinglesCount() : "", ((musicBand.getGenre() != null) ? musicBand.getGenre() : ""), ((musicBand.getLabel().getName() != null) ? musicBand.getLabel().getName() : ""));
+                }
                 writer.flush();
                 consoleWriter.write("Saving successfully done");
             } catch (IOException e) {
