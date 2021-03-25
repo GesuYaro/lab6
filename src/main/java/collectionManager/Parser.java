@@ -20,7 +20,7 @@ public class Parser {
      */
     public ArrayList<ArrayList<String>> parseCSV(Reader reader) throws IOException {
         ArrayList<ArrayList<String>> list = new ArrayList<>();
-        CSVParser parser = CSVParser.parse(reader,CSVFormat.DEFAULT);
+        CSVParser parser = CSVParser.parse(reader,CSVFormat.RFC4180);
         for (CSVRecord csvRecord : parser) {
             ArrayList<String> insideList = new ArrayList<>();
             for (String record : csvRecord) {

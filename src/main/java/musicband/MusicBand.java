@@ -96,7 +96,7 @@ public class MusicBand implements Comparable<MusicBand>, CSVConvertible {
 
     /**
      * @param o Экземпляр класса MusicBand, с которым необходимо сравнить
-     * @return >0, если больше, <0, если меньше, 0, если равно
+     * @return больше 0, если больше, меньше 0, если меньше, 0, если равно
      */
     @Override
     public int compareTo(MusicBand o) {

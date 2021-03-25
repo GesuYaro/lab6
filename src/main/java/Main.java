@@ -76,7 +76,6 @@ public class Main {
         commands.put("print_field_descending_genre", new PrintFieldsDescendingGenreCommand(writer, arrayListManager));
         commands.put("execute_script", new ExecuteScriptCommand(writer, arrayListManager, historyStorage));
         commands.put("help", new HelpCommand(writer, commands));
-        commands.put("show_asuka", new ShowAsukaCommand(writer));
         CommandHandler commandHandler = new CommandHandler(commands, historyStorage);
         Console console = new Console(commandHandler, reader, writer);
         console.run();

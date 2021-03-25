@@ -121,6 +121,7 @@ public class ExecuteScriptCommand extends AbstractCommand {
             writer.write("Unexpected error with file");
         }
         if (!isInnerScript) scripts.clear();
+        else scripts.remove(file);
         return CommandCode.DEFAULT;
     }
 
