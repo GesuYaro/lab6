@@ -42,7 +42,7 @@ public class ArrayListInitializer {
      * @return Коллекция объектов MusicBand
      * @throws IOException
      */
-    public ArrayList<MusicBand> init() throws IOException {
+    public ArrayList<MusicBand> init() throws IOException, IllegalStateException {
         ArrayList<ArrayList<String>> data = parser.parseCSV(reader);
         ArrayList<MusicBand> musicBands = new ArrayList<>();
         Iterator<ArrayList<String>> iterator = data.iterator();

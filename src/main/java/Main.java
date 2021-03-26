@@ -34,7 +34,11 @@ public class Main {
                 if (file.canRead() && file.canWrite()) {
                     BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
                     ArrayListInitializer arrayListInitializer = new ArrayListInitializer(fileReader, new MusicBandFieldsChecker(), new Parser());
-                    musicBandArrayList = arrayListInitializer.init();
+                    try {
+                        musicBandArrayList = arrayListInitializer.init();
+                    } catch (IllegalStateException e) {
+                        writer.write("Incorrect file");
+                    }
                     if (arrayListInitializer.getInitializationDate() != null)
                         initializationDate = arrayListInitializer.getInitializationDate();
                 }

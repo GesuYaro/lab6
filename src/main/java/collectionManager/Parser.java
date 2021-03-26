@@ -18,17 +18,17 @@ public class Parser {
      * @return Коллекцию коллекций с текстовым значением полей
      * @throws IOException
      */
-    public ArrayList<ArrayList<String>> parseCSV(Reader reader) throws IOException {
-        ArrayList<ArrayList<String>> list = new ArrayList<>();
-        CSVParser parser = CSVParser.parse(reader,CSVFormat.RFC4180);
-        for (CSVRecord csvRecord : parser) {
-            ArrayList<String> insideList = new ArrayList<>();
-            for (String record : csvRecord) {
-                insideList.add(record);
+    public ArrayList<ArrayList<String>> parseCSV(Reader reader) throws IOException, IllegalStateException {
+            ArrayList<ArrayList<String>> list = new ArrayList<>();
+            CSVParser parser = CSVParser.parse(reader, CSVFormat.RFC4180);
+            for (CSVRecord csvRecord : parser) {
+                ArrayList<String> insideList = new ArrayList<>();
+                for (String record : csvRecord) {
+                    insideList.add(record);
+                }
+                list.add(insideList);
             }
-            list.add(insideList);
-        }
-        return list;
+            return list;
     }
 
     public ArrayList<ArrayList<String>> parseCSV(String string) throws IOException {
