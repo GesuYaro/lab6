@@ -50,7 +50,11 @@ public class ArrayListInitializer {
         if (iterator.hasNext()) {
             innerIteratorForDate = iterator.next().iterator();
             if (innerIteratorForDate.hasNext()) {
-                initializationDate = fieldsReader.readDate(innerIteratorForDate.next());
+                try {
+                    initializationDate = fieldsReader.readDate(innerIteratorForDate.next());
+                } catch (InputValueException e) {
+                    System.out.println("Error in the file: " + e.getMessage());
+                }
             }
         }
         for (;iterator.hasNext();) {
