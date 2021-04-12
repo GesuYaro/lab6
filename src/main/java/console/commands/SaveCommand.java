@@ -14,17 +14,17 @@ import java.io.*;
  */
 public class SaveCommand extends AbstractCommand {
 
-    ArrayListManager listManager;
-    Writer writer;
-    ConsoleWriter consoleWriter;
-    File file;
+    private ArrayListManager listManager;
+    private Writer writer;
+    private console.Writer consoleWriter;
+    private File file;
 
     /**
      * @param listManager Менеджер коллекции
      * @param file Файл, в который будет сохрянятся коллекция
      * @param consoleWriter Объект класса, выводящего в консоль
      */
-    public SaveCommand(ArrayListManager listManager, File file, ConsoleWriter consoleWriter) {
+    public SaveCommand(ArrayListManager listManager, File file, console.Writer consoleWriter) {
         super("save", "save collection into file");
         this.listManager = listManager;
         this.file = file;
@@ -32,11 +32,11 @@ public class SaveCommand extends AbstractCommand {
     }
 
     /**
-     * @param argument
+     * @param firstArgument
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) {
         try {
             writer = new OutputStreamWriter(new FileOutputStream(file));
 //            String CSVString = "";

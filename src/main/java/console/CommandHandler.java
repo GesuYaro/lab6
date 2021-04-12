@@ -2,6 +2,7 @@ package console;
 
 import console.exсeptions.NoSuchCommandException;
 import console.commands.*;
+import server.Request;
 
 import java.util.HashMap;
 
@@ -11,23 +12,7 @@ import java.util.HashMap;
 public class CommandHandler {
 
     private HistoryStorage historyStorage;
-    private HashMap<String,Command> commands = new HashMap<>();
-
-//    public CommandHandler(HistoryStorage historyStorage ,HelpCommand helpCommand, InfoCommand infoCommand, ShowCommand showCommand, AddCommand addCommand, UpdateCommand updateCommand, RemoveByIdCommand removeByIdCommand, ClearCommand clearCommand, ExitCommand exitCommand, InsertAtCommand insertAtCommand, RemoveLastCommand removeLastCommand, HistoryCommand historyCommand) {
-//        this.historyStorage = historyStorage;
-//        commands.put("help", helpCommand);
-//        commands.put("info", infoCommand);
-//        commands.put("show", showCommand);
-//        commands.put("add", addCommand);
-//        commands.put("update", updateCommand);
-//        commands.put("remove_by_id", removeByIdCommand);
-//        commands.put("clear", clearCommand);
-//        commands.put("exit", exitCommand);
-//        commands.put("insert_at", insertAtCommand);
-//        commands.put("remove_last", removeLastCommand);
-//        commands.put("history", historyCommand);
-//
-//    }
+    private HashMap<String,Command> commands;
 
     /**
      * @param commands Мапа с объектами команд, которые нужно будет исполнять, каждый объект должен реализовывать интерфейс Command
@@ -39,7 +24,7 @@ public class CommandHandler {
     }
 
     /**
-     * @param commands Мапа с командами
+     * @param commands Словарь с командами
      */
     public void setCommands(HashMap<String, Command> commands) {
         this.commands = commands;
@@ -55,23 +40,22 @@ public class CommandHandler {
 
     /**
      * Исполняет программу
-     * @param command Название команды
+     * @param request Запрос
      * @return CommandCode в зависимости от результата выполнения команды
      */
-    public CommandCode execute(String[] command) {
-        if(commands.containsKey(command[0])) {
-            historyStorage.addToCommandHistory(command[0]);
-            return commands.get(command[0]).execute(command.length > 1 ? command[1] : "");
+    public CommandCode execute(Request request) throws NoSuchCommandException {
+        if(commands.containsKey(request.getCommand())) {
+            historyStorage.addToCommandHistory(request.getCommand());
+            return commands.get(request.getCommand()).execute(request.getFirstArg() != null ? request.getFirstArg() : "", request.getArgs());
         }
         else {
-            if (!command[0].equals("")) throw new NoSuchCommandException(command[0]);
-            return CommandCode.NO_SUCH_COMMAND;
+            throw new NoSuchCommandException(request.getCommand());
         }
     }
 
 
     /**
-     * @return Мапу с командами, которые использует CommandHandler
+     * @return Словарь с командами, которые использует CommandHandler
      */
     public HashMap<String,Command> getCommands() {
         return commands;

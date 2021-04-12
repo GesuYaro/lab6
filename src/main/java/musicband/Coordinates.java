@@ -1,9 +1,11 @@
 package musicband;
 
+import java.io.Serializable;
+
 /**
  * Координаты
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
     private Long x; //Максимальное значение поля: 3, Поле не может быть null
     private Double y; //Значение поля должно быть больше -859, Поле не может быть null
 

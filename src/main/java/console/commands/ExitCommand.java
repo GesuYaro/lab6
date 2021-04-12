@@ -10,11 +10,12 @@ public class ExitCommand extends AbstractCommand {
     }
 
     /**
-     * @param argument
+     * @param firstArgument
+     * @param arguments
      * @return CommandCode.EXIT
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) {
         return CommandCode.EXIT;
     }
 }

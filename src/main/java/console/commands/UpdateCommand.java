@@ -1,45 +1,40 @@
 package console.commands;
 
 import collectionManager.ArrayListManager;
-import console.ConsoleWriter;
 import console.exсeptions.NoArgumentFoundException;
 import console.exсeptions.NoSuchIdException;
-import console.Reader;
-import musicband.Coordinates;
-import musicband.Label;
-import musicband.MusicBand;
-import musicband.MusicGenre;
+import musicband.*;
 
 import java.time.LocalDate;
 
 public class UpdateCommand extends AbstractCommand {
 
-    private ConsoleWriter writer;
     private ArrayListManager listManager;
-    private Reader reader;
+    private MusicBandFieldsChecker fieldsChecker;
 
     /**
-     * @param writer Объект класса, выводящего в консоль
      * @param listManager Менеджер коллекции
-     * @param reader Считыватель полей
+     * @param fieldsChecker Считыватель полей
      */
-    public UpdateCommand(ConsoleWriter writer, ArrayListManager listManager, Reader reader) {
+    public UpdateCommand(ArrayListManager listManager, MusicBandFieldsChecker fieldsChecker) {
         super("update id {element}", "update the value of the collection item whose id is equal to the given");
-        this.writer = writer;
         this.listManager = listManager;
-        this.reader = reader;
+        this.fieldsChecker = fieldsChecker;
     }
 
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) throws NoArgumentFoundException, NoSuchIdException{
         try {
-            Long arg = Long.parseLong(argument.trim().split(" ")[0]);
-            String name = reader.readName();
-            Coordinates coordinates = reader.readCoordinates();
-            int numberOfParticipants = reader.readNumberOfParticipants();
-            Integer singlesCount = reader.readSinglesCount();
-            MusicGenre musicGenre = reader.readMusicGenre();
-            Label label = reader.readlabel();
+            if (firstArgument == null) {
+                firstArgument = "";
+            }
+            Long arg = Long.parseLong(firstArgument.trim().split(" ")[0]);
+            String name = fieldsChecker.readName(arguments[0]);
+            Coordinates coordinates = new Coordinates(fieldsChecker.readX(arguments[1]), fieldsChecker.readY(arguments[2]));
+            int numberOfParticipants = fieldsChecker.readNumberOfParticipants(arguments[3]);
+            Integer singlesCount = fieldsChecker.readSinglesCount(arguments[4]);
+            MusicGenre musicGenre = fieldsChecker.readMusicGenre(arguments[5]);
+            Label label = fieldsChecker.readLabel(arguments[6]);
             try {
                 MusicBand updatingMusicBand = listManager.getById(arg);
                 long id = updatingMusicBand.getId();
@@ -48,7 +43,7 @@ public class UpdateCommand extends AbstractCommand {
                 listManager.replace(id, musicBand);
             }
             catch (NoSuchIdException e) {
-                writer.write(e.getMessage());
+                throw e;
             }
         } catch (NumberFormatException e) {
             throw new NoArgumentFoundException();

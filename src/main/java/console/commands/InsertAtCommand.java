@@ -2,12 +2,10 @@ package console.commands;
 
 import collectionManager.ArrayListManager;
 import console.ConsoleWriter;
+import console.exсeptions.InputValueException;
 import console.exсeptions.NoArgumentFoundException;
 import console.Reader;
-import musicband.Coordinates;
-import musicband.Label;
-import musicband.MusicBand;
-import musicband.MusicGenre;
+import musicband.*;
 
 import java.time.LocalDate;
 
@@ -16,51 +14,49 @@ import java.time.LocalDate;
  */
 public class InsertAtCommand extends AbstractCommand {
 
-    private ConsoleWriter writer;
     private ArrayListManager listManager;
-    private Reader reader;
+    private MusicBandFieldsChecker fieldsChecker;
 
     /**
-     * @param writer Объект класса, выводящего в консоль
      * @param listManager Менеджер коллекции
-     * @param reader Считыватель полей
+     * @param fieldsChecker Считыватель полей
      */
-    public InsertAtCommand(ConsoleWriter writer, ArrayListManager listManager, Reader reader) {
+    public InsertAtCommand(ArrayListManager listManager, MusicBandFieldsChecker fieldsChecker) {
         super("insert_at index {element}", "add a new item at a given position");
-        this.writer = writer;
         this.listManager = listManager;
-        this.reader = reader;
+        this.fieldsChecker = fieldsChecker;
     }
 
     /**
-     * @param argument id элемента
+     * @param firstArgument id элемента
+     * @param arguments
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) throws InputValueException, IndexOutOfBoundsException, NoArgumentFoundException {
         try {
             try {
-                int index = Integer.parseInt(argument
+                int index = Integer.parseInt(firstArgument
                         .trim()
                         .split(" ")[0]
                 );
                 if ( !(index > listManager.getArrayList().size() - 1 || index < 0) ) {
-                    String name = reader.readName();
-                    Coordinates coordinates = reader.readCoordinates();
+                    String name = fieldsChecker.readName(arguments[0]);
+                    Coordinates coordinates = new Coordinates(fieldsChecker.readX(arguments[1]), fieldsChecker.readY(arguments[2]));
                     LocalDate creationDate = LocalDate.now();
-                    int numberOfParticipants = reader.readNumberOfParticipants();
-                    Integer singlesCount = reader.readSinglesCount();
-                    MusicGenre musicGenre = reader.readMusicGenre();
-                    Label label = reader.readlabel();
+                    int numberOfParticipants = fieldsChecker.readNumberOfParticipants(arguments[3]);
+                    Integer singlesCount = fieldsChecker.readSinglesCount(arguments[4]);
+                    MusicGenre musicGenre = fieldsChecker.readMusicGenre(arguments[5]);
+                    Label label = fieldsChecker.readLabel(arguments[6]);
                     listManager.increaseMaxId();
                     long id = listManager.getMaxId();
                     MusicBand musicBand = new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, musicGenre, label);
                     listManager.insertAtIndex(index, musicBand);
                 } else {
-                    writer.write("ERROR. Index is out of bounds");
+                    throw new IndexOutOfBoundsException();
                 }
             } catch (IndexOutOfBoundsException e) {
-                writer.write("ERROR. Index is out of bounds");
+                throw e;
             }
         } catch (NumberFormatException e) {
             throw new NoArgumentFoundException();

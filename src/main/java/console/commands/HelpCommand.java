@@ -2,6 +2,7 @@ package console.commands;
 
 
 import console.ConsoleWriter;
+import console.Writer;
 
 import java.util.HashMap;
 
@@ -10,13 +11,13 @@ import java.util.HashMap;
  */
 public class HelpCommand extends AbstractCommand {
     private HashMap<String, Command> commands;
-    private ConsoleWriter writer;
+    private Writer writer;
 
     /**
      * @param writer Объект класса, выводящего в консоль
      * @param commands Мапка с командами
      */
-    public HelpCommand(ConsoleWriter writer, HashMap<String, Command> commands) {
+    public HelpCommand(Writer writer, HashMap<String, Command> commands) {
         super("help","display help for available commands");
         this.writer = writer;
         this.commands = commands;
@@ -37,11 +38,12 @@ public class HelpCommand extends AbstractCommand {
     }
 
     /**
-     * @param argument
+     * @param firstArgument
+     * @param arguments
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) {
         String description = "Commands:\n";
         for (String key : commands.keySet()) {
             Command command;

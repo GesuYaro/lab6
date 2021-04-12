@@ -2,6 +2,7 @@ package console.commands;
 
 import collectionManager.ArrayListManager;;
 import console.ConsoleWriter;
+import console.Writer;
 import console.exсeptions.NoArgumentFoundException;
 import musicband.MusicGenre;
 
@@ -10,35 +11,35 @@ import musicband.MusicGenre;
  */
 public class CountGreaterThanGenreCommand extends AbstractCommand{
     private ArrayListManager listManager;
-    private ConsoleWriter writer;
+    private Writer writer;
 
     /**
      * @param writer Объект класса, осуществляющий вывод в консоль
      * @param listManager Менеджер коллекции
      */
-    public CountGreaterThanGenreCommand(ConsoleWriter writer, ArrayListManager listManager) {
+    public CountGreaterThanGenreCommand(Writer writer, ArrayListManager listManager) {
         super("count_greater_than_genre", "print the number of elements whose genre field value is greater than the given one");
         this.listManager = listManager;
         this.writer = writer;
     }
 
     /**
-     * @param argument Значение поля genre
+     * @param firstArgument Значение поля genre
      * @return CommandCode.DEFAULT
      * @throws NoArgumentFoundException
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) throws NoArgumentFoundException {
         try {
-            argument = argument.trim().split(" ")[0].toUpperCase();
-            MusicGenre genre = MusicGenre.valueOf(argument);
+            firstArgument = firstArgument.trim().split(" ")[0].toUpperCase();
+            MusicGenre genre = MusicGenre.valueOf(firstArgument);
             int count = listManager.countGreaterThanGenre(genre);
             writer.write(String.valueOf(count));
         } catch (IllegalArgumentException e) {
-            if (argument.equals("")) {
+            if (firstArgument.equals("")) {
                 throw new NoArgumentFoundException();
             } else {
-                throw new NoArgumentFoundException("Genre " + argument + " not found");
+                throw new NoArgumentFoundException("Genre " + firstArgument + " not found");
             }
         }
         return CommandCode.DEFAULT;

@@ -1,9 +1,11 @@
 package musicband;
 
+import java.io.Serializable;
+
 /**
  * Лейбл
  */
-public class Label {
+public class Label implements Serializable {
     private String name;
 
     /**

@@ -17,11 +17,12 @@ public class ClearCommand extends AbstractCommand {
     }
 
     /**
-     * @param argument
+     * @param firstArgument
+     * @param arguments
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) {
         listManager.clear();
         return CommandCode.DEFAULT;
     }

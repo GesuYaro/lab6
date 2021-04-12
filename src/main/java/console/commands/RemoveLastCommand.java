@@ -6,6 +6,7 @@ import collectionManager.ArrayListManager;
  * Класс команды remove_last, удаляющей последний элемент
  */
 public class RemoveLastCommand extends AbstractCommand {
+
     private ArrayListManager listManager;
 
     /**
@@ -17,11 +18,12 @@ public class RemoveLastCommand extends AbstractCommand {
     }
 
     /**
-     * @param argument
+     * @param firstArgument
+     * @param arguments
      * @return CommandCode.DEFAULT;
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) {
         listManager.removeLast();
         return CommandCode.DEFAULT;
     }

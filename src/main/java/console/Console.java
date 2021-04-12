@@ -21,7 +21,7 @@ public class Console implements Runnable {
     /**
      * @param commandHandler Обработчик команд, он же Invoker
      * @param reader Входной поток
-     * @param writer выходной поток
+     * @param writer Выходной поток
      */
     public Console(CommandHandler commandHandler, BufferedReader reader, ConsoleWriter writer) {
         this.commandHandler = commandHandler;
@@ -48,7 +48,7 @@ public class Console implements Runnable {
                     userCommand[0] = userCommand[0].trim();
                     if (userCommand.length > 1) userCommand[1] = userCommand[1].trim();
                     try {
-                        commandCode = commandHandler.execute(userCommand);
+//                        commandCode = commandHandler.execute(userCommand);
                     } catch (NoArgumentFoundException e) {
                         writer.write(e.getMessage());
                     }

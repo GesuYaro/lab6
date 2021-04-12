@@ -19,13 +19,13 @@ public class RemoveByIdCommand extends AbstractCommand {
     }
 
     /**
-     * @param argument
+     * @param firstArgument
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) {
         try {
-            long id = Long.parseLong(argument.trim().split(" ")[0]);
+            long id = Long.parseLong(firstArgument.trim().split(" ")[0]);
             listManager.removeById(id);
         } catch (NumberFormatException e) {
             throw new NoArgumentFoundException();

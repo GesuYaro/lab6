@@ -4,7 +4,7 @@ package console;
 /**
  * Класс для консоли, осуществляющий вывод
  */
-public class ConsoleWriter {
+public class ConsoleWriter implements Writer {
     public ConsoleWriter() {}
 
     /**

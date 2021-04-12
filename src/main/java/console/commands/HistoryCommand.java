@@ -2,31 +2,33 @@ package console.commands;
 
 import console.CommandHandler;
 import console.ConsoleWriter;
+import console.Writer;
 
 
 /**
  * Класс команды history, выводящей историю команд
  */
 public class HistoryCommand extends AbstractCommand {
-    private ConsoleWriter writer;
+    private Writer writer;
     private CommandHandler.HistoryStorage historyStorage;
 
     /**
      * @param writer Объект класса, выводящего в консоль
      * @param historyStorage Объект класса, хранящего историю команд
      */
-    public HistoryCommand(ConsoleWriter writer, CommandHandler.HistoryStorage historyStorage) {
+    public HistoryCommand(Writer writer, CommandHandler.HistoryStorage historyStorage) {
         super("history", "print the last 7 commands (without their arguments)");
         this.writer = writer;
         this.historyStorage = historyStorage;
     }
 
     /**
-     * @param argument
+     * @param firstArgument
+     * @param arguments
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) {
         String[] history = historyStorage.getCommandHistory();
         String historyInLine = "";
         for (String h : history) {

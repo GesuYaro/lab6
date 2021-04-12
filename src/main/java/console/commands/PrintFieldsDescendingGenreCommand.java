@@ -2,6 +2,7 @@ package console.commands;
 
 import collectionManager.ArrayListManager;
 import console.ConsoleWriter;
+import console.Writer;
 import musicband.MusicBand;
 import musicband.MusicGenre;
 
@@ -11,25 +12,26 @@ import java.util.Iterator;
  * Класс команды print_fields_descending_genre, выводящей поле genre всех объектов в убывающем порядке
  */
 public class PrintFieldsDescendingGenreCommand extends AbstractCommand {
-    private ConsoleWriter writer;
+    private Writer writer;
     private ArrayListManager listManager;
 
     /**
      * @param writer Объект класса, выводящего в консоль
      * @param listManager Менеджер коллекции
      */
-    public PrintFieldsDescendingGenreCommand(ConsoleWriter writer, ArrayListManager listManager) {
+    public PrintFieldsDescendingGenreCommand(Writer writer, ArrayListManager listManager) {
         super("print_field_descending_genre", "display the genre field values of all elements in descending order");
         this.writer = writer;
         this.listManager = listManager;
     }
 
     /**
-     * @param argument
+     * @param firstArgument
+     * @param arguments
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String argument) {
+    public CommandCode execute(String firstArgument, String[] arguments) {
         String str = "";
         if (listManager.getArrayList().size() < 1) {
             str = "Collection is empty";
