@@ -3,10 +3,7 @@ package server;
 import console.CommandHandler;
 import console.ServerWriter;
 import console.commands.CommandCode;
-import console.exсeptions.InputValueException;
-import console.exсeptions.NoArgumentFoundException;
-import console.exсeptions.NoSuchCommandException;
-import console.exсeptions.NoSuchIdException;
+import console.exсeptions.*;
 import server.exceptions.WrongRequestException;
 
 import java.io.IOException;
@@ -34,7 +31,8 @@ public class RequestHandler implements Runnable {
                         if (request != null) {
                             try {
                                 commandCode = commandHandler.execute(request);
-                            } catch (NoArgumentFoundException | InputValueException | IndexOutOfBoundsException | NoSuchIdException e) {
+                            } catch (NoArgumentFoundException | InputValueException | IndexOutOfBoundsException | NoSuchIdException |
+                            NotEnoughArgumentsException e) {
                                 writer.write(e.getMessage());
                             }
                         }
@@ -47,7 +45,7 @@ public class RequestHandler implements Runnable {
                         }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("disconnected");
                     break;
                 }
             } while (!commandCode.equals(CommandCode.EXIT));
