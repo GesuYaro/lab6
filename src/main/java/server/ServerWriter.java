@@ -1,5 +1,6 @@
-package console;
+package server;
 
+import console.Writer;
 import musicband.MusicBand;
 import server.Response;
 
@@ -10,11 +11,11 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class ServerWriter implements Writer{
+public class ServerWriter implements Writer {
 
     private SocketChannel socketChannel;
-    private ArrayList<MusicBand> arrayList;
     private Response response;
 
     public ServerWriter(SocketChannel socketChannel) {
@@ -43,6 +44,7 @@ public class ServerWriter implements Writer{
     }
 
     public void sendResponse() throws IOException {
+        Collections.sort(response.getList());
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(response);

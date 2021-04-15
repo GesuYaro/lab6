@@ -1,8 +1,7 @@
 package console.commands;
 
 import collectionManager.ArrayListManager;
-import console.ConsoleWriter;
-import console.Writer;
+import server.ServerWriter;
 
 
 /**
@@ -10,14 +9,14 @@ import console.Writer;
  */
 public class ShowCommand extends AbstractCommand {
 
-    private Writer writer;
+    private ServerWriter writer;
     private ArrayListManager listManager;
 
     /**
      * @param writer Объект класса, выводящего в консоль
      * @param listManager Менеджер коллекции
      */
-    public ShowCommand(Writer writer, ArrayListManager listManager) {
+    public ShowCommand(ServerWriter writer, ArrayListManager listManager) {
         super("show", "print all elements of the collection in string representation");
         this.writer = writer;
         this.listManager = listManager;
@@ -29,7 +28,7 @@ public class ShowCommand extends AbstractCommand {
      */
     @Override
     public CommandCode execute(String firstArgument, String[] arguments) {
-        writer.write(listManager.show());
+        writer.write(listManager.getArrayList());
         return CommandCode.DEFAULT;
     }
 }

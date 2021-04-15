@@ -2,7 +2,6 @@ import collectionManager.ArrayListInitializer;
 import collectionManager.ArrayListManager;
 import collectionManager.Parser;
 import console.*;
-import console.Console;
 import console.commands.Command;
 import console.commands.*;
 import musicband.MusicBand;
@@ -10,6 +9,7 @@ import musicband.MusicBandFieldsChecker;
 import server.Connector;
 import server.RequestHandler;
 import server.RequestReader;
+import server.ServerWriter;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -22,12 +22,15 @@ import java.util.HashMap;
 /**
  * Главный класс, в котором создаются объекты и запускается приложение
  */
-public class Main {
+public class ServerMain {
+
+    private static int PORT = 690;
+
     public static void main(String[] args) {
         Connector connector = null;
         SocketChannel socketChannel = null;
         try {
-            connector = new Connector(690);
+            connector = new Connector(PORT);
             while (socketChannel == null) {
                 socketChannel = connector.getSocketChannel();
             }

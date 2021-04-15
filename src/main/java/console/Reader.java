@@ -13,6 +13,6 @@ public interface Reader {
     int readNumberOfParticipants();
     Integer readSinglesCount();
     MusicGenre readMusicGenre();
-    Label readlabel();
+    Label readLabel();
 
 }

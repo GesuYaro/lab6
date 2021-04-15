@@ -1,7 +1,6 @@
 package server;
 
 import console.CommandHandler;
-import console.ServerWriter;
 import console.commands.CommandCode;
 import console.exсeptions.*;
 import server.exceptions.WrongRequestException;

@@ -110,7 +110,7 @@ public class FieldsReader implements Reader {
     /**
      * @return Корректный лейбл, введенный пользователем
      */
-    public Label readlabel() {
+    public Label readLabel() {
         return read("Enter the label name:", checker::readLabel);
     }
 

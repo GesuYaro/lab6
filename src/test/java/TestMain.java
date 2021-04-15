@@ -58,6 +58,9 @@ public class TestMain {
                     if (o instanceof Response) {
                         Response responseFromServer = (Response) o;
                         System.out.println(responseFromServer.getMessage());
+                        if (!responseFromServer.getList().isEmpty()) {
+                            System.out.println(responseFromServer.getList());
+                        }
                     } else {
                         System.out.println("Not a response");
                     }
