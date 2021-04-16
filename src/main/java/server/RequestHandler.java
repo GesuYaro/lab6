@@ -40,11 +40,11 @@ public class RequestHandler implements Runnable {
                     } finally {
                         if (request != null) {
                             writer.sendResponse();
-                            System.out.println("send response");
+                            //System.out.println("send response");
                         }
                     }
                 } catch (IOException e) {
-                    System.out.println("disconnected");
+                    System.out.println("Disconnected");
                     break;
                 }
             } while (!commandCode.equals(CommandCode.EXIT));

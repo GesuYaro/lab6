@@ -1,6 +1,7 @@
 import client.*;
 import console.ConsoleWriter;
 import console.FieldsReader;
+import console.commands.ClientExecuteScriptCommand;
 import musicband.MusicBandFieldsChecker;
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ import java.util.HashSet;
 
 public class ClientMain {
 
-    private static int PORT = 690;
+    private static int PORT = 691;
 
     public static void main(String[] args) {
         Connector connector = null;
@@ -31,15 +32,16 @@ public class ClientMain {
             if (socket != null) {
                 RequestWriter requestWriter = new RequestWriter(socket.getOutputStream(), new ByteArrayOutputStream(1024));
                 ResponseReader responseReader = new ResponseReader(socket.getInputStream());
-                HashSet<String> commandsWithExtendedRequest = new HashSet<>();
+                HashSet<String> commandsWithExtendedRequest = new HashSet<>(); //
                 commandsWithExtendedRequest.add("add");
                 commandsWithExtendedRequest.add("insert_at");
                 commandsWithExtendedRequest.add("update");
-                ConsoleWriter consoleWriter = new ConsoleWriter();
+                ConsoleWriter consoleWriter = new ConsoleWriter(); //
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-                FieldsReader fieldsReader = new FieldsReader(new MusicBandFieldsChecker(bufferedReader), consoleWriter);
-                RequestFabric requestFabric = new RequestFabric(commandsWithExtendedRequest, fieldsReader);
-                Console console = new Console(requestWriter, responseReader, requestFabric, bufferedReader);
+                FieldsReader fieldsReader = new FieldsReader(new MusicBandFieldsChecker(bufferedReader), consoleWriter); //
+                RequestFabric requestFabric = new RequestFabric(commandsWithExtendedRequest, fieldsReader); //
+                ClientExecuteScriptCommand executeScriptCommand = new ClientExecuteScriptCommand(consoleWriter, commandsWithExtendedRequest, requestWriter, responseReader);
+                Console console = new Console(requestWriter, responseReader, requestFabric, bufferedReader, executeScriptCommand); //
                 console.run();
             }
         } catch (IOException e) {

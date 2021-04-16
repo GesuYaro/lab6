@@ -6,10 +6,8 @@ import console.commands.Command;
 import console.commands.*;
 import musicband.MusicBand;
 import musicband.MusicBandFieldsChecker;
-import server.Connector;
-import server.RequestHandler;
-import server.RequestReader;
-import server.ServerWriter;
+import server.*;
+import server.Console;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -24,21 +22,11 @@ import java.util.HashMap;
  */
 public class ServerMain {
 
-    private static int PORT = 690;
+    private static int PORT = 691;
 
     public static void main(String[] args) {
-        Connector connector = null;
-        SocketChannel socketChannel = null;
-        try {
-            connector = new Connector(PORT);
-            while (socketChannel == null) {
-                socketChannel = connector.getSocketChannel();
-            }
-            System.out.println("Connected");
-        } catch (IOException e) {
-            System.out.println("ZHOPA");
-        }
-        ServerWriter writer = new ServerWriter(socketChannel);
+
+        ConsoleWriter writer = new ConsoleWriter();
         ArrayList<MusicBand> musicBandArrayList = new ArrayList<>();
         LocalDate initializationDate = LocalDate.now();
         File file = null;
@@ -74,43 +62,20 @@ public class ServerMain {
         }
 
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        CommandHandler.HistoryStorage historyStorage = new CommandHandler.HistoryStorage();
-        MusicBandFieldsChecker musicBandFieldsChecker = new MusicBandFieldsChecker(reader);
-//        FieldsReader fieldsReader = new FieldsReader(musicBandFieldsChecker, writer);
-        HashMap<String, Command> commands = new HashMap<>();
         ArrayListManager arrayListManager = new ArrayListManager(musicBandArrayList, initializationDate);
         if (arrayListManager.containsRepeatingId()) {  // проверяем, есть ли объекты с одинаковым id
             writer.write("Error. Collection contains repeating id");
             arrayListManager.clear();
         }
-        commands.put("info", new InfoCommand(writer, arrayListManager));
-        commands.put("show", new ShowCommand(writer, arrayListManager));
-//        commands.put("add", new AddCommand(arrayListManager, fieldsReader));
-        commands.put("add", new AddCommand(arrayListManager, musicBandFieldsChecker));
-//        commands.put("update", new UpdateCommand(writer,arrayListManager, fieldsReader));
-        commands.put("update", new UpdateCommand(arrayListManager, musicBandFieldsChecker));
-        commands.put("remove_by_id", new RemoveByIdCommand(arrayListManager));
-        commands.put("clear", new ClearCommand(arrayListManager));
-        commands.put("save", new SaveCommand(arrayListManager, file, writer));
-        commands.put("exit", new ExitCommand());
-//        commands.put("insert_at", new InsertAtCommand(writer, arrayListManager, fieldsReader));
-        commands.put("insert_at", new InsertAtCommand(arrayListManager, musicBandFieldsChecker));
-        commands.put("remove_last", new RemoveLastCommand(arrayListManager));
-        commands.put("history", new HistoryCommand(writer,historyStorage));
-        commands.put("count_greater_than_genre", new CountGreaterThanGenreCommand(writer, arrayListManager));
-        commands.put("filter_less_than_singles_count", new FilterLessThanSinglesCountCommand(writer, arrayListManager));
-        commands.put("print_field_descending_genre", new PrintFieldsDescendingGenreCommand(writer, arrayListManager));
-//        commands.put("execute_script", new ExecuteScriptCommand(writer, arrayListManager, historyStorage));
-        commands.put("help", new HelpCommand(writer, commands));
-        CommandHandler commandHandler = new CommandHandler(commands, historyStorage);
-//        Console console = new Console(commandHandler, reader, writer);
-//        console.run();
 
-
-        RequestReader requestReader = new RequestReader(socketChannel, ByteBuffer.allocate(1024));
-        RequestHandler requestHandler = new RequestHandler(commandHandler, requestReader, writer);
-        requestHandler.run();
+        Connector connector = null;
+        try {
+            connector = new Connector(PORT);
+            server.Console console = new Console(arrayListManager, file, connector);
+            console.run(args != null && args.length > 0 && args[0].equals("s"));
+        } catch (IOException e) {
+            writer.write("Can't make a server");
+        }
 
     }
 }

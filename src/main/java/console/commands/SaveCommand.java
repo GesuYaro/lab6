@@ -39,12 +39,7 @@ public class SaveCommand extends AbstractCommand {
     public CommandCode execute(String firstArgument, String[] arguments) {
         try {
             writer = new OutputStreamWriter(new FileOutputStream(file));
-//            String CSVString = "";
-//            CSVString += listManager.getInitializationDate().toString() + "\n";
-//            CSVString += CollectionToCSV.toCSV(listManager.getArrayList());
             try {
-//                writer.write(CSVString);
-//                writer.flush();
                 writer.write(listManager.getInitializationDate().toString() + "\n");
                 CSVPrinter printer = new CSVPrinter(writer, CSVFormat.RFC4180);
                 for (MusicBand musicBand: listManager.getArrayList()) {

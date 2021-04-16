@@ -6,14 +6,14 @@ import musicband.Label;
 import musicband.MusicGenre;
 import server.Request;
 
-import java.util.HashSet;
+import java.util.Collection;
 
 public class RequestFabric {
 
-    private HashSet<String> commandsWithExtendedRequest;
+    private Collection<String> commandsWithExtendedRequest;
     private FieldsReader fieldsReader;
 
-    public RequestFabric(HashSet<String> commandsWithExtendedRequest, FieldsReader fieldsReader) {
+    public RequestFabric(Collection<String> commandsWithExtendedRequest, FieldsReader fieldsReader) {
         this.commandsWithExtendedRequest = commandsWithExtendedRequest;
         this.fieldsReader = fieldsReader;
     }
