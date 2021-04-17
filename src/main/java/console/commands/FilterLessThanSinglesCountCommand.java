@@ -31,10 +31,6 @@ public class FilterLessThanSinglesCountCommand extends AbstractCommand {
     public CommandCode execute(String firstArgument, String[] arguments) throws NoArgumentFoundException {
         try {
             Integer singlesCount = Integer.parseInt(firstArgument.trim().split(" ")[0].trim());
-//            String str = "";
-//            for (Iterator it = listManager.filterLessThanSinglesCount(singlesCount).iterator(); it.hasNext(); ) {
-//                str += it.next().toString() + "\n";
-//            }
             writer.write(listManager.filterLessThanSinglesCount(singlesCount));
         } catch (NumberFormatException e) {
             throw new NoArgumentFoundException("Argument not found. Enter integer firstArgument");

@@ -102,8 +102,7 @@ public class FieldsReader implements Reader {
         for (MusicGenre genre : MusicGenre.values()) {
             message += "\n" + genre.name();
         }
-        MusicGenre musicGenre = this.read(message, checker::readMusicGenre);
-        return musicGenre;
+        return this.read(message, checker::readMusicGenre);
     }
 
 

@@ -1,7 +1,6 @@
 package console.commands;
 
 import console.CommandHandler;
-import console.ConsoleWriter;
 import console.Writer;
 
 

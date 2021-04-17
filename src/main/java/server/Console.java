@@ -2,7 +2,6 @@ package server;
 
 import collectionManager.ArrayListManager;
 import console.CommandHandler;
-import console.Writer;
 import console.commands.*;
 import musicband.MusicBandFieldsChecker;
 import org.slf4j.Logger;

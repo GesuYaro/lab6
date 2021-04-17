@@ -1,7 +1,6 @@
 package console.commands;
 
 
-import console.ConsoleWriter;
 import console.Writer;
 
 import java.util.HashMap;

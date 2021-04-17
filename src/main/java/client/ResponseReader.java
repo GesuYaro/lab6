@@ -21,10 +21,6 @@ public class ResponseReader {
         Object object = objectInputStream.readObject();
         if (object instanceof Response) {
             responseFromServer = (Response) object;
-            //System.out.println(responseFromServer.getMessage());
-            if (!responseFromServer.getList().isEmpty()) {
-                //System.out.println(responseFromServer.getList());
-            }
         } else {
             throw new NotAResponseException();
         }

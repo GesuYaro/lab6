@@ -1,7 +1,6 @@
 package console.commands;
 
 import collectionManager.ArrayListManager;
-import console.ConsoleWriter;
 import console.Writer;
 import musicband.MusicBand;
 import musicband.MusicGenre;

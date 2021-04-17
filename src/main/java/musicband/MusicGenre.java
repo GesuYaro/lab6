@@ -8,5 +8,5 @@ import java.io.Serializable;
 public enum MusicGenre implements Serializable {
     RAP,
     BLUES,
-    POP;
+    POP
 }

@@ -35,16 +35,11 @@ public class UpdateCommand extends AbstractCommand {
             Integer singlesCount = fieldsChecker.readSinglesCount(arguments[4]);
             MusicGenre musicGenre = fieldsChecker.readMusicGenre(arguments[5]);
             Label label = fieldsChecker.readLabel(arguments[6]);
-            try {
-                MusicBand updatingMusicBand = listManager.getById(arg);
-                long id = updatingMusicBand.getId();
-                LocalDate creationDate = updatingMusicBand.getCreationDate();
-                MusicBand musicBand = new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, musicGenre, label);
-                listManager.replace(id, musicBand);
-            }
-            catch (NoSuchIdException e) {
-                throw e;
-            }
+            MusicBand updatingMusicBand = listManager.getById(arg);
+            long id = updatingMusicBand.getId();
+            LocalDate creationDate = updatingMusicBand.getCreationDate();
+            MusicBand musicBand = new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, musicGenre, label);
+            listManager.replace(id, musicBand);
         } catch (NumberFormatException e) {
             throw new NoArgumentFoundException();
         }

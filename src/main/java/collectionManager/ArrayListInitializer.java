@@ -14,7 +14,6 @@ import java.util.Iterator;
  */
 public class ArrayListInitializer {
     private Reader reader;
-    private ArrayList<MusicBand> list;
     private LocalDate initializationDate;
     private Parser parser;
     private MusicBandFieldsChecker fieldsReader;
@@ -57,7 +56,7 @@ public class ArrayListInitializer {
                 }
             }
         }
-        for (;iterator.hasNext();) {
+        while (iterator.hasNext()) {
             Iterator<String> innerIterator = iterator.next().iterator();
             long id = 0;
             String name = "";

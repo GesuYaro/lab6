@@ -2,8 +2,6 @@ import collectionManager.ArrayListInitializer;
 import collectionManager.ArrayListManager;
 import collectionManager.Parser;
 import console.*;
-import console.commands.Command;
-import console.commands.*;
 import musicband.MusicBand;
 import musicband.MusicBandFieldsChecker;
 import org.slf4j.Logger;
@@ -12,11 +10,8 @@ import server.*;
 import server.Console;
 
 import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**

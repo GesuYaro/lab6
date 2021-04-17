@@ -1,12 +1,3 @@
-import collectionManager.Parser;
-import musicband.Coordinates;
-import musicband.Label;
-import musicband.MusicBand;
-import musicband.MusicGenre;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 import server.Request;
 import server.Response;
 
@@ -15,10 +6,6 @@ import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.nio.CharBuffer;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class TestMain {
     public static final int PORT = 690;

@@ -4,18 +4,14 @@ import client.Console;
 import client.RequestFabric;
 import client.RequestWriter;
 import client.ResponseReader;
-import collectionManager.ArrayListManager;
 import console.*;
-import console.Writer;
 import console.exсeptions.IncorrectScriptException;
 import console.exсeptions.NoArgumentFoundException;
 import musicband.MusicBandFieldsChecker;
-import console.CommandHandler.HistoryStorage;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Stream;
 
