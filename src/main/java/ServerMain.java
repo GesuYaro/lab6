@@ -6,6 +6,8 @@ import console.commands.Command;
 import console.commands.*;
 import musicband.MusicBand;
 import musicband.MusicBandFieldsChecker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import server.*;
 import server.Console;
 
@@ -23,9 +25,11 @@ import java.util.HashMap;
 public class ServerMain {
 
     private static int PORT = 691;
+    public static final Logger logger = LoggerFactory.getLogger("Server");
 
     public static void main(String[] args) {
 
+        logger.info("App is turned on.");
         ConsoleWriter writer = new ConsoleWriter();
         ArrayList<MusicBand> musicBandArrayList = new ArrayList<>();
         LocalDate initializationDate = LocalDate.now();
@@ -45,36 +49,36 @@ public class ServerMain {
                     try {
                         musicBandArrayList = arrayListInitializer.init();
                     } catch (IllegalStateException e) {
-                        writer.write("Incorrect file");
+                        logger.info("Incorrect file");
                     }
                     if (arrayListInitializer.getInitializationDate() != null)
                         initializationDate = arrayListInitializer.getInitializationDate();
                 }
-                else writer.write("Access denied. Can't read or write file");
+                else logger.error("Access denied. Can't read or write file");
             }
-            else writer.write("Error with environment variable. Variable LAB5_PATH not found");
+            else logger.error("Error with environment variable. Variable LAB5_PATH not found");
         } catch (SecurityException e) {
-            writer.write("File not found. Access denied. Can't create a new file.");
+            logger.error("File not found. Access denied. Can't create a new file.");
         } catch (FileNotFoundException e) {
-            writer.write("File not found");
+            logger.error("File not found");
         } catch (IOException e) {
-            writer.write("Unexpected error with initialization");
+            logger.error("Unexpected error with initialization");
         }
 
 
         ArrayListManager arrayListManager = new ArrayListManager(musicBandArrayList, initializationDate);
         if (arrayListManager.containsRepeatingId()) {  // проверяем, есть ли объекты с одинаковым id
-            writer.write("Error. Collection contains repeating id");
+            logger.error("Error. Collection contains repeating id");
             arrayListManager.clear();
         }
 
         Connector connector = null;
         try {
             connector = new Connector(PORT);
-            server.Console console = new Console(arrayListManager, file, connector);
+            server.Console console = new Console(arrayListManager, file, connector, logger);
             console.run(args != null && args.length > 0 && args[0].equals("s"));
         } catch (IOException e) {
-            writer.write("Can't make a server");
+            logger.error("Can't make a server");
         }
 
     }

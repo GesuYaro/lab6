@@ -386,8 +386,10 @@ public class MusicBandFieldsChecker {
      */
     public Label readLabel(String string) throws InputValueException {
         Label label = new Label();
-        //string = string.replaceAll("%COMMA%", ",");
-        label.setName(string.trim());
+        if (string != null) {
+            string = string.trim();
+        }
+        label.setName(string);
         return label;
     }
 

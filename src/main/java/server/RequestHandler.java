@@ -3,6 +3,7 @@ package server;
 import console.CommandHandler;
 import console.commands.CommandCode;
 import console.exсeptions.*;
+import org.slf4j.Logger;
 import server.exceptions.WrongRequestException;
 
 import java.io.IOException;
@@ -12,11 +13,13 @@ public class RequestHandler implements Runnable {
     private CommandHandler commandHandler;
     private RequestReader requestReader;
     private ServerWriter writer;
+    private Logger logger;
 
-    public RequestHandler(CommandHandler commandHandler, RequestReader requestReader, ServerWriter writer) {
+    public RequestHandler(CommandHandler commandHandler, RequestReader requestReader, ServerWriter writer, Logger logger) {
         this.commandHandler = commandHandler;
         this.requestReader = requestReader;
         this.writer = writer;
+        this.logger = logger;
     }
 
     @Override
@@ -29,6 +32,7 @@ public class RequestHandler implements Runnable {
                         request = requestReader.readRequest();
                         if (request != null) {
                             try {
+                                logger.info("Got the request");
                                 commandCode = commandHandler.execute(request);
                             } catch (NoArgumentFoundException | InputValueException | IndexOutOfBoundsException | NoSuchIdException |
                             NotEnoughArgumentsException e) {
@@ -40,11 +44,11 @@ public class RequestHandler implements Runnable {
                     } finally {
                         if (request != null) {
                             writer.sendResponse();
-                            //System.out.println("send response");
+                            logger.info("Send response");
                         }
                     }
                 } catch (IOException e) {
-                    System.out.println("Disconnected");
+                    logger.info("Disconnected");
                     break;
                 }
             } while (!commandCode.equals(CommandCode.EXIT));

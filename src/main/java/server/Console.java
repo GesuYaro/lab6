@@ -5,6 +5,7 @@ import console.CommandHandler;
 import console.Writer;
 import console.commands.*;
 import musicband.MusicBandFieldsChecker;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -16,24 +17,26 @@ public class Console {
     private ArrayListManager arrayListManager;
     private File savingFile;
     private Connector connector;
+    private Logger logger;
 
-    public Console(ArrayListManager arrayListManager, File savingFile, Connector connector) {
+    public Console(ArrayListManager arrayListManager, File savingFile, Connector connector, Logger logger) {
         this.arrayListManager = arrayListManager;
         this.savingFile = savingFile;
         this.connector = connector;
+        this.logger = logger;
     }
 
     public void run(boolean singleIterationMode) {
-        Command saveCommand = new SaveCommand(arrayListManager, savingFile, System.out::println);
+        Command saveCommand = new SaveCommand(arrayListManager, savingFile, logger);
         do {
             SocketChannel socketChannel = null;
             try {
                 while (socketChannel == null) {
                     socketChannel = connector.getSocketChannel();
                 }
-                System.out.println("Connected");
+                logger.info("Connected");
             } catch (IOException e) {
-                System.out.println("Can not connect");
+                logger.warn("Can not connect");
             }
             ServerWriter writer = new ServerWriter(socketChannel);
 
@@ -42,10 +45,6 @@ public class Console {
             CommandHandler.HistoryStorage historyStorage = new CommandHandler.HistoryStorage();
             MusicBandFieldsChecker musicBandFieldsChecker = new MusicBandFieldsChecker(reader);
             HashMap<String, Command> commands = new HashMap<>();
-            if (arrayListManager.containsRepeatingId()) {  // проверяем, есть ли объекты с одинаковым id
-                writer.write("Error. Collection contains repeating id");
-                arrayListManager.clear();
-            }
             commands.put("info", new InfoCommand(writer, arrayListManager));
             commands.put("show", new ShowCommand(writer, arrayListManager));
             commands.put("add", new AddCommand(arrayListManager, musicBandFieldsChecker));
@@ -65,7 +64,7 @@ public class Console {
 
 
             RequestReader requestReader = new RequestReader(socketChannel, ByteBuffer.allocate(1024));
-            RequestHandler requestHandler = new RequestHandler(commandHandler, requestReader, writer);
+            RequestHandler requestHandler = new RequestHandler(commandHandler, requestReader, writer, logger);
             requestHandler.run();
             saveCommand.execute("", new String[1]);
         } while (!singleIterationMode);

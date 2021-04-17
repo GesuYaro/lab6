@@ -1,11 +1,10 @@
 package console.commands;
 
 import collectionManager.ArrayListManager;
-import collectionManager.CollectionToCSV;
-import console.ConsoleWriter;
 import musicband.MusicBand;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
 
 import java.io.*;
 
@@ -16,19 +15,19 @@ public class SaveCommand extends AbstractCommand {
 
     private ArrayListManager listManager;
     private Writer writer;
-    private console.Writer consoleWriter;
+    private Logger logger;
     private File file;
 
     /**
      * @param listManager Менеджер коллекции
      * @param file Файл, в который будет сохрянятся коллекция
-     * @param consoleWriter Объект класса, выводящего в консоль
+     * @param logger Объект класса, выводящего в консоль
      */
-    public SaveCommand(ArrayListManager listManager, File file, console.Writer consoleWriter) {
+    public SaveCommand(ArrayListManager listManager, File file, Logger logger) {
         super("save", "save collection into file");
         this.listManager = listManager;
         this.file = file;
-        this.consoleWriter = consoleWriter;
+        this.logger = logger;
     }
 
     /**
@@ -46,12 +45,12 @@ public class SaveCommand extends AbstractCommand {
                     printer.printRecord(musicBand.getId(), musicBand.getName(), musicBand.getCoordinates().getX(), musicBand.getCoordinates().getY(), musicBand.getCreationDate(), musicBand.getNumberOfParticipants(), ((musicBand.getSinglesCount()) != null) ? musicBand.getSinglesCount() : "", ((musicBand.getGenre() != null) ? musicBand.getGenre() : ""), ((musicBand.getLabel().getName() != null) ? musicBand.getLabel().getName() : ""));
                 }
                 writer.flush();
-                consoleWriter.write("Saving successfully done");
+                logger.info("Saving successfully done");
             } catch (IOException e) {
-                consoleWriter.write("Unexpected save error");
+                logger.error("Unexpected save error");
             }
         } catch (FileNotFoundException | NullPointerException e) {
-            consoleWriter.write("File not found");
+            logger.error("File not found");
         }
         return CommandCode.DEFAULT;
     }

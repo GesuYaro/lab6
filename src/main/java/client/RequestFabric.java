@@ -40,7 +40,7 @@ public class RequestFabric {
                 coordinates.getY().toString(),
                 Integer.toString(numberOfParticipants),
                 singlesCount.toString(),
-                musicGenre.name(),
+                musicGenre != null ? musicGenre.name() : null,
                 label.getName()});
     }
 
