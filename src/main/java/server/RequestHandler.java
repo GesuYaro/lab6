@@ -37,10 +37,12 @@ public class RequestHandler implements Runnable {
                             } catch (NoArgumentFoundException | InputValueException | IndexOutOfBoundsException | NoSuchIdException |
                             NotEnoughArgumentsException e) {
                                 writer.write(e.getMessage());
+                                logger.warn(e.getMessage());
                             }
                         }
                     } catch (NoSuchCommandException | WrongRequestException e) {
                         writer.write(e.getMessage());
+                        logger.warn(e.getMessage());
                     } finally {
                         if (request != null) {
                             writer.sendResponse();

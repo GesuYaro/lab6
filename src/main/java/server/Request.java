@@ -1,17 +1,19 @@
 package server;
 
+import musicband.MusicBand;
+
 import java.io.Serializable;
 
 public class Request implements Serializable {
 
     private String command;
     private String firstArg;
-    private String[] args;
+    private MusicBand musicBand;
 
-    public Request(String command, String firstArg, String[] args) {
+    public Request(String command, String firstArg, MusicBand musicBand) {
         this.command = command;
         this.firstArg = firstArg;
-        this.args = args;
+        this.musicBand = musicBand;
     }
 
     public String getCommand() {
@@ -22,7 +24,7 @@ public class Request implements Serializable {
         return firstArg;
     }
 
-    public String[] getArgs() {
-        return args;
+    public MusicBand getMusicBand() {
+        return musicBand;
     }
 }

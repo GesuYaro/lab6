@@ -273,7 +273,12 @@ public class MusicBandFieldsChecker {
                 if (str != null) {
                     str = str.trim();
                     if (!str.equals("")) {
-                        singlesCount = Integer.parseInt(str);
+                        Integer preSinglesCount = Integer.parseInt(str);
+                        if (preSinglesCount > 0) {
+                            singlesCount = preSinglesCount;
+                        } else {
+                            throw new NumberFormatException();
+                        }
                     }
                 }
             }

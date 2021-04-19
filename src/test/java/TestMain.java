@@ -33,7 +33,7 @@ public class TestMain {
                     break;
                 }
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                Request request = new Request(message, "arg", new String[]{"arg1", "arg2"});
+                Request request = new Request(message, "arg", null);
                 objectOutputStream.writeObject(request);
                 objectOutputStream.flush();
                 byteArrayOutputStream.writeTo(outputStream);

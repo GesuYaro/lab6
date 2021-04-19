@@ -21,11 +21,12 @@ public class ServerMain {
 
     private static int PORT = 691;
     public static final Logger logger = LoggerFactory.getLogger("Server");
+    private static boolean singleIterationMode = false;
 
     public static void main(String[] args) {
 
         logger.info("App is turned on.");
-        ConsoleWriter writer = new ConsoleWriter();
+        setArguments(args);
         ArrayList<MusicBand> musicBandArrayList = new ArrayList<>();
         LocalDate initializationDate = LocalDate.now();
         File file = null;
@@ -33,7 +34,7 @@ public class ServerMain {
         try {
             path = System.getenv("LAB5_PATH");
             if (path != null) {
-                path = path.replace("\u202A", "");
+                path = path.replace("\u202A", ""); // windows любит добавлять неизвестный непечатный символ в переменную окружения
                 file = new File(path);
                 if (!file.exists()) {
                     file.createNewFile();
@@ -44,7 +45,7 @@ public class ServerMain {
                     try {
                         musicBandArrayList = arrayListInitializer.init();
                     } catch (IllegalStateException e) {
-                        logger.info("Incorrect file");
+                        logger.error("Incorrect file");
                     }
                     if (arrayListInitializer.getInitializationDate() != null)
                         initializationDate = arrayListInitializer.getInitializationDate();
@@ -71,10 +72,23 @@ public class ServerMain {
         try {
             connector = new Connector(PORT);
             server.Console console = new Console(arrayListManager, file, connector, logger);
-            console.run(args != null && args.length > 0 && args[0].equals("s"));
+            console.run(singleIterationMode);
         } catch (IOException e) {
             logger.error("Can't make a server");
         }
 
+    }
+
+    private static void setArguments(String[] args) {
+        for (String argument:
+             args) {
+            if (argument.equals("s")) {
+                singleIterationMode = true;
+            } else {
+                try {
+                    PORT = Integer.parseInt(argument);
+                } catch (NumberFormatException ignored) {}
+            }
+        }
     }
 }

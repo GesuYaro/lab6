@@ -2,17 +2,13 @@ package server;
 
 import server.exceptions.WrongRequestException;
 
-import java.io.ByteArrayInputStream;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 public class RequestReader {
 
     private ByteBuffer inBuffer;
-    private byte[] bytes;
     private SocketChannel socketChannel;
 
     public RequestReader(SocketChannel socketChannel, ByteBuffer inBuffer) {
@@ -23,28 +19,33 @@ public class RequestReader {
     public Request readRequest() throws IOException, WrongRequestException {
         Object returningObject = null;
         inBuffer.clear();
-        try {
-            if (socketChannel != null) {
-                socketChannel.read(inBuffer);
+        int bytesRead = 0;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+         do {
+            try {
+                if (socketChannel != null) {
+                    bytesRead = socketChannel.read(inBuffer);
+                }
+            } finally {
+                inBuffer.flip();
             }
-        } catch (IOException e) {
-            throw new IOException();
-        } finally {
-            inBuffer.flip();
-        }
-        bytes = new byte[inBuffer.limit()];
-        for (int i = 0; i < inBuffer.limit(); i++) {
-            bytes[i] = inBuffer.get();
-        }
-        if (bytes.length > 0) {
-            try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+            for (int i = 0; i < inBuffer.limit(); i++) {
+                byteArrayOutputStream.write(inBuffer.get());
+            }
+        } while (bytesRead > 0);
+        if (byteArrayOutputStream.size() > 0) {
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))) {
                 returningObject = objectInputStream.readObject();
             } catch (ClassNotFoundException | EOFException e) {
                 throw new WrongRequestException();
             }
         }
-        if (returningObject instanceof Request) {
-            return (Request) returningObject;
+        if (returningObject != null) {
+            if (returningObject instanceof Request) {
+                return (Request) returningObject;
+            } else {
+                throw new WrongRequestException();
+            }
         } else {
             return null;
         }

@@ -3,6 +3,7 @@ package console.commands;
 import collectionManager.ArrayListManager;
 import console.Writer;
 import console.exсeptions.NoArgumentFoundException;
+import musicband.MusicBand;
 import musicband.MusicGenre;
 
 /**
@@ -24,11 +25,12 @@ public class CountGreaterThanGenreCommand extends AbstractCommand{
 
     /**
      * @param firstArgument Значение поля genre
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT
      * @throws NoArgumentFoundException
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) throws NoArgumentFoundException {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) throws NoArgumentFoundException {
         try {
             firstArgument = firstArgument.trim().split(" ")[0].toUpperCase();
             MusicGenre genre = MusicGenre.valueOf(firstArgument);

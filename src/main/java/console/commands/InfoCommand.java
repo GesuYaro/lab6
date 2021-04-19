@@ -2,6 +2,7 @@ package console.commands;
 
 import collectionManager.ArrayListManager;
 import console.Writer;
+import musicband.MusicBand;
 
 /**
  * Класс команды info, выводящей информацию о коллекции
@@ -23,10 +24,11 @@ public class InfoCommand extends AbstractCommand {
 
     /**
      * @param firstArgument
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) {
         writer.write(listManager.info());
         return CommandCode.DEFAULT;
     }

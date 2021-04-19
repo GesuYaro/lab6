@@ -48,7 +48,9 @@ public class ServerWriter implements Writer {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(response);
         ByteBuffer outBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
-        socketChannel.write(outBuffer);
+        while (outBuffer.hasRemaining()) {
+            socketChannel.write(outBuffer);
+        }
         outBuffer.clear();
         response = new Response();
     }

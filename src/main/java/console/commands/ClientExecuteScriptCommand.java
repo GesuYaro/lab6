@@ -7,6 +7,7 @@ import client.ResponseReader;
 import console.*;
 import console.exсeptions.IncorrectScriptException;
 import console.exсeptions.NoArgumentFoundException;
+import musicband.MusicBand;
 import musicband.MusicBandFieldsChecker;
 
 import java.io.*;
@@ -45,7 +46,7 @@ public class ClientExecuteScriptCommand extends AbstractCommand {
     }
 
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) throws NoArgumentFoundException {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) throws NoArgumentFoundException {
         String path = firstArgument.trim();
         if (path.equals("")) throw new NoArgumentFoundException();
         File file = new File(path);

@@ -1,6 +1,7 @@
 package console.commands;
 
 import collectionManager.ArrayListManager;
+import musicband.MusicBand;
 
 /**
  * Класс команды clear, очищающей коллекцию
@@ -18,11 +19,11 @@ public class ClearCommand extends AbstractCommand {
 
     /**
      * @param firstArgument
-     * @param arguments
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) {
         listManager.clear();
         return CommandCode.DEFAULT;
     }

@@ -32,10 +32,11 @@ public class SaveCommand extends AbstractCommand {
 
     /**
      * @param firstArgument
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) {
         try {
             writer = new OutputStreamWriter(new FileOutputStream(file));
             try {

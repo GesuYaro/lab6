@@ -2,6 +2,7 @@ package console.commands;
 
 
 import console.Writer;
+import musicband.MusicBand;
 
 import java.util.HashMap;
 
@@ -38,11 +39,11 @@ public class HelpCommand extends AbstractCommand {
 
     /**
      * @param firstArgument
-     * @param arguments
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) {
         String description = "Commands:\n";
         for (String key : commands.keySet()) {
             Command command;

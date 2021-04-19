@@ -65,7 +65,7 @@ public class Console {
             RequestReader requestReader = new RequestReader(socketChannel, ByteBuffer.allocate(1024));
             RequestHandler requestHandler = new RequestHandler(commandHandler, requestReader, writer, logger);
             requestHandler.run();
-            saveCommand.execute("", new String[1]);
+            saveCommand.execute("", null);
         } while (!singleIterationMode);
     }
 

@@ -28,24 +28,19 @@ public class AddCommand extends AbstractCommand {
 
     /**
      * @param firstArgument
-     * @param arguments
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT
      * @throws InputValueException
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) throws InputValueException {
-        if (arguments.length < 7) throw new NotEnoughArgumentsException();
-        String name = checker.readName(arguments[0]);
-        Coordinates coordinates = new Coordinates(checker.readX(arguments[1]), checker.readY(arguments[2]));
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) throws InputValueException {
+        if (requestedMusicBand == null) throw new NotEnoughArgumentsException();
         LocalDate creationDate = LocalDate.now();
-        int numberOfParticipants = checker.readNumberOfParticipants(arguments[3]);
-        Integer singlesCount = checker.readSinglesCount(arguments[4]);
-        MusicGenre musicGenre = checker.readMusicGenre(arguments[5]);
-        Label label = checker.readLabel(arguments[6]);
         listManager.increaseMaxId();
         long id = listManager.getMaxId();
-        MusicBand musicBand = new MusicBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, musicGenre, label);
-        listManager.add(musicBand);
+        requestedMusicBand.setCreationDate(creationDate);
+        requestedMusicBand.setId(id);
+        listManager.add(requestedMusicBand);
         return CommandCode.DEFAULT;
     }
 }

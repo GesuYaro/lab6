@@ -3,6 +3,7 @@ package client;
 import console.FieldsReader;
 import musicband.Coordinates;
 import musicband.Label;
+import musicband.MusicBand;
 import musicband.MusicGenre;
 import server.Request;
 
@@ -23,7 +24,7 @@ public class RequestFabric {
         if (commandsWithExtendedRequest.contains(command)) {
             request = createExtendedRequest(command, argument);
         } else {
-            request = new Request(command, argument, new String[]{});
+            request = new Request(command, argument, null);
         }
         return request;
     }
@@ -35,13 +36,7 @@ public class RequestFabric {
         Integer singlesCount = fieldsReader.readSinglesCount();
         MusicGenre musicGenre = fieldsReader.readMusicGenre();
         Label label = fieldsReader.readLabel();
-        return new Request(command, argument, new String[]{name,
-                coordinates.getX().toString(),
-                coordinates.getY().toString(),
-                Integer.toString(numberOfParticipants),
-                singlesCount.toString(),
-                musicGenre != null ? musicGenre.name() : null,
-                label.getName()});
+        return new Request(command, argument, new MusicBand(0, name, coordinates, null, numberOfParticipants, singlesCount, musicGenre, label));
     }
 
 }

@@ -1,6 +1,7 @@
 package console.commands;
 
 import collectionManager.ArrayListManager;
+import musicband.MusicBand;
 import server.ServerWriter;
 import console.exсeptions.NoArgumentFoundException;
 
@@ -23,12 +24,12 @@ public class FilterLessThanSinglesCountCommand extends AbstractCommand {
 
     /**
      * @param firstArgument singles_count
-     * @param arguments
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT
      * @throws NoArgumentFoundException
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) throws NoArgumentFoundException {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) throws NoArgumentFoundException {
         try {
             Integer singlesCount = Integer.parseInt(firstArgument.trim().split(" ")[0].trim());
             writer.write(listManager.filterLessThanSinglesCount(singlesCount));

@@ -1,5 +1,7 @@
 package console.commands;
 
+import musicband.MusicBand;
+
 /**
  * Класс команды exit, осуществяющей выход из программы
  */
@@ -11,11 +13,11 @@ public class ExitCommand extends AbstractCommand {
 
     /**
      * @param firstArgument
-     * @param arguments
+     * @param requestedMusicBand
      * @return CommandCode.EXIT
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) {
         return CommandCode.EXIT;
     }
 }

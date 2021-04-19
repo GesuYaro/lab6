@@ -39,7 +39,7 @@ public class Console {
                 }
                 if (command[0].equals("execute_script")) {
                     if (command.length > 1) {
-                        clientExecuteScriptCommand.execute(command[1], new String[]{""});
+                        clientExecuteScriptCommand.execute(command[1], null);
                     } else {
                         System.out.println("Argument not found");
                     }

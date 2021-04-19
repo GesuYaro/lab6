@@ -26,11 +26,11 @@ public class PrintFieldsDescendingGenreCommand extends AbstractCommand {
 
     /**
      * @param firstArgument
-     * @param arguments
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) {
         String str = "";
         if (listManager.getArrayList().size() < 1) {
             str = "Collection is empty";

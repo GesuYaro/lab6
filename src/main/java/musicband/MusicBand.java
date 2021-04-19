@@ -138,6 +138,14 @@ public class MusicBand implements Comparable<MusicBand>, CSVConvertible, Seriali
                 + ((genre != null) ? genre : "") + ","
                 + csvLabelName;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
 }
 
 

@@ -46,7 +46,8 @@ public class CommandHandler {
     public CommandCode execute(Request request) throws NoSuchCommandException {
         if(commands.containsKey(request.getCommand())) {
             historyStorage.addToCommandHistory(request.getCommand());
-            return commands.get(request.getCommand()).execute(request.getFirstArg() != null ? request.getFirstArg() : "", request.getArgs());
+            return commands.get(request.getCommand())
+                    .execute(request.getFirstArg() != null ? request.getFirstArg() : "", request.getMusicBand());
         }
         else {
             throw new NoSuchCommandException(request.getCommand());

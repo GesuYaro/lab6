@@ -1,6 +1,7 @@
 package console.commands;
 
 import collectionManager.ArrayListManager;
+import musicband.MusicBand;
 
 /**
  * Класс команды remove_last, удаляющей последний элемент
@@ -19,11 +20,11 @@ public class RemoveLastCommand extends AbstractCommand {
 
     /**
      * @param firstArgument
-     * @param arguments
+     * @param requestedMusicBand
      * @return CommandCode.DEFAULT;
      */
     @Override
-    public CommandCode execute(String firstArgument, String[] arguments) {
+    public CommandCode execute(String firstArgument, MusicBand requestedMusicBand) {
         listManager.removeLast();
         return CommandCode.DEFAULT;
     }
