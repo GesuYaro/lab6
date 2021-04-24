@@ -32,7 +32,7 @@ public class ClientMain {
                 socket = connector.getSocket();
             }
             if (socket != null) {
-                RequestWriter requestWriter = new RequestWriter(socket.getOutputStream(), new ByteArrayOutputStream(1024));
+                RequestWriter requestWriter = new RequestWriter(socket.getOutputStream(), new ByteArrayOutputStream());
                 ResponseReader responseReader = new ResponseReader(socket.getInputStream());
                 HashSet<String> commandsWithExtendedRequest = new HashSet<>();
                 commandsWithExtendedRequest.add("add");

@@ -48,7 +48,7 @@ public class Connector {
             System.out.println("Unexpected error with connection");
         }
         if (socket != null) {
-            System.out.println("Connected");
+            System.out.println("Connected to: " + inetAddress.toString() + " port: " + port);
         }
         return socket;
     }

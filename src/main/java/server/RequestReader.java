@@ -5,6 +5,7 @@ import server.exceptions.WrongRequestException;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
 
 public class RequestReader {
 
@@ -20,25 +21,35 @@ public class RequestReader {
         Object returningObject = null;
         inBuffer.clear();
         int bytesRead = 0;
+        int previousBytesRead = 0;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-         do {
+//        ArrayList<Byte> byteArrayList = new ArrayList<>();
+        do {
+            previousBytesRead = bytesRead;
             try {
                 if (socketChannel != null) {
                     bytesRead = socketChannel.read(inBuffer);
                 }
             } finally {
-                inBuffer.flip();
+                 inBuffer.flip();
             }
-            for (int i = 0; i < inBuffer.limit(); i++) {
-                byteArrayOutputStream.write(inBuffer.get());
+            if (bytesRead > 0) {
+                for (int i = 0; i < inBuffer.limit(); i++) {
+                    byteArrayOutputStream.write(inBuffer.get());
+                    //byteArrayList.add(inBuffer.get());
+                }
             }
-        } while (bytesRead > 0);
-        if (byteArrayOutputStream.size() > 0) {
-            try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))) {
-                returningObject = objectInputStream.readObject();
-            } catch (ClassNotFoundException | EOFException e) {
-                throw new WrongRequestException();
+        } while (bytesRead > 0 || previousBytesRead == inBuffer.capacity());
+        try {
+            if (byteArrayOutputStream.size() > 0) {
+                try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))) {
+                    returningObject = objectInputStream.readObject();
+                } catch (ClassNotFoundException | EOFException e) {
+                    throw new WrongRequestException();
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         if (returningObject != null) {
             if (returningObject instanceof Request) {
