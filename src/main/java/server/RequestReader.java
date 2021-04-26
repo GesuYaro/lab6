@@ -63,4 +63,7 @@ public class RequestReader {
 
     }
 
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
+    }
 }

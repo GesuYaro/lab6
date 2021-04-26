@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 public class ClientMain {
 
-    private static int PORT = 691;
+    private static int PORT = 3101;
     private static String hostAddress;
 
     public static void main(String[] args) {
@@ -42,8 +42,8 @@ public class ClientMain {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
                 FieldsReader fieldsReader = new FieldsReader(new MusicBandFieldsChecker(bufferedReader), consoleWriter);
                 RequestFabric requestFabric = new RequestFabric(commandsWithExtendedRequest, fieldsReader);
-                ClientExecuteScriptCommand executeScriptCommand = new ClientExecuteScriptCommand(consoleWriter, commandsWithExtendedRequest, requestWriter, responseReader);
-                Console console = new Console(requestWriter, responseReader, requestFabric, bufferedReader, executeScriptCommand);
+                ClientExecuteScriptCommand executeScriptCommand = new ClientExecuteScriptCommand(consoleWriter, commandsWithExtendedRequest, requestWriter, responseReader, socket);
+                Console console = new Console(requestWriter, responseReader, requestFabric, bufferedReader, executeScriptCommand, socket);
                 console.run();
             }
         } catch (IOException e) {

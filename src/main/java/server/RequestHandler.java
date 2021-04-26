@@ -24,35 +24,35 @@ public class RequestHandler implements Runnable {
 
     @Override
     public void run() {
-            CommandCode commandCode = CommandCode.DEFAULT;
-            do {
+        CommandCode commandCode = CommandCode.DEFAULT;
+        do {
+            try {
+                Request request = null;
                 try {
-                    Request request = null;
-                    try {
-                        request = requestReader.readRequest();
-                        if (request != null) {
-                            try {
-                                logger.info("Got the request");
-                                commandCode = commandHandler.execute(request);
-                            } catch (NoArgumentFoundException | InputValueException | IndexOutOfBoundsException | NoSuchIdException |
-                            NotEnoughArgumentsException e) {
-                                writer.write(e.getMessage());
-                                logger.warn(e.getMessage());
-                            }
-                        }
-                    } catch (NoSuchCommandException | WrongRequestException e) {
-                        writer.write(e.getMessage());
-                        logger.warn(e.getMessage());
-                    } finally {
-                        if (request != null) {
-                            writer.sendResponse();
-                            logger.info("Send response");
+                    request = requestReader.readRequest();
+                    if (request != null) {
+                        try {
+                            logger.info("Got the request");
+                            commandCode = commandHandler.execute(request);
+                        } catch (NoArgumentFoundException | InputValueException | IndexOutOfBoundsException | NoSuchIdException |
+                                NotEnoughArgumentsException e) {
+                            writer.write(e.getMessage());
+                            logger.warn(e.getMessage());
                         }
                     }
-                } catch (IOException e) {
-                    logger.info("Disconnected");
-                    break;
+                } catch (NoSuchCommandException | WrongRequestException e) {
+                    writer.write(e.getMessage());
+                    logger.warn(e.getMessage());
+                } finally {
+                    if (request != null) {
+                        writer.sendResponse();
+                        logger.info("Send response");
+                    }
                 }
-            } while (!commandCode.equals(CommandCode.EXIT));
+            } catch (IOException e) {
+                logger.warn("Connection refused");
+                break;
+            }
+        } while (!commandCode.equals(CommandCode.EXIT));
     }
 }

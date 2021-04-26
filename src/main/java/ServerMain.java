@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class ServerMain {
 
-    private static int PORT = 691;
+    private static int PORT = 3101;
     public static final Logger logger = LoggerFactory.getLogger("Server");
     private static boolean singleIterationMode = false;
 

@@ -59,12 +59,14 @@ public class Console {
             commands.put("filter_less_than_singles_count", new FilterLessThanSinglesCountCommand(writer, arrayListManager));
             commands.put("print_field_descending_genre", new PrintFieldsDescendingGenreCommand(writer, arrayListManager));
             commands.put("help", new HelpCommand(writer, commands));
+            commands.put("exit", new ExitCommand());
             CommandHandler commandHandler = new CommandHandler(commands, historyStorage);
 
 
             RequestReader requestReader = new RequestReader(socketChannel, ByteBuffer.allocate(1024));
             RequestHandler requestHandler = new RequestHandler(commandHandler, requestReader, writer, logger);
             requestHandler.run();
+            logger.info("Client disconnected");
             saveCommand.execute("", null);
         } while (!singleIterationMode);
     }
