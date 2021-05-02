@@ -2,8 +2,6 @@ package console.commands;
 
 import client.Console;
 import client.RequestFabric;
-import client.RequestWriter;
-import client.ResponseReader;
 import console.*;
 import console.exсeptions.IncorrectScriptException;
 import console.exсeptions.NoArgumentFoundException;
@@ -11,7 +9,6 @@ import musicband.MusicBand;
 import musicband.MusicBandFieldsChecker;
 
 import java.io.*;
-import java.net.Socket;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashSet;
@@ -23,30 +20,27 @@ public class ClientExecuteScriptCommand extends AbstractCommand {
     private HashSet<File> scripts;
     private boolean isInnerScript;
     private Collection<String> commandsWithExtendedRequest;
-    private RequestWriter requestWriter;
-    private ResponseReader responseReader;
-    private Socket socket;
+    private int port;
+    private String hostAddress;
 
-    public ClientExecuteScriptCommand(ConsoleWriter writer, Collection<String> commandsWithExtendedRequest, RequestWriter requestWriter, ResponseReader responseReader, Socket socket) {
+    public ClientExecuteScriptCommand(ConsoleWriter writer, Collection<String> commandsWithExtendedRequest, int port, String hostAddress) {
         super("execute_script", "Execute script from the file");
         this.writer = writer;
         this.commandsWithExtendedRequest = commandsWithExtendedRequest;
-        this.requestWriter = requestWriter;
-        this.responseReader = responseReader;
-        this.socket = socket;
         this.isInnerScript = false;
         this.scripts = new HashSet<>();
+        this.port = port;
+        this.hostAddress = hostAddress;
     }
 
-    public ClientExecuteScriptCommand(ConsoleWriter writer, Collection<String> commandsWithExtendedRequest, RequestWriter requestWriter, ResponseReader responseReader, Socket socket, HashSet<File> scripts) {
+    public ClientExecuteScriptCommand(ConsoleWriter writer, Collection<String> commandsWithExtendedRequest, int port, String hostAddress, HashSet<File> scripts) {
         super("execute_script", "Execute script from the file");
         this.writer = writer;
         this.commandsWithExtendedRequest = commandsWithExtendedRequest;
-        this.requestWriter = requestWriter;
-        this.responseReader = responseReader;
-        this.socket = socket;
         this.isInnerScript = true;
         this.scripts = scripts;
+        this.port = port;
+        this.hostAddress = hostAddress;
     }
 
     @Override
@@ -64,8 +58,8 @@ public class ClientExecuteScriptCommand extends AbstractCommand {
                             MusicBandFieldsChecker fieldsReader = new MusicBandFieldsChecker(fileReader);
                             FieldsReader scriptModeReader = new FieldsReader(fieldsReader, writer, false);
                             RequestFabric requestFabric = new RequestFabric(commandsWithExtendedRequest, scriptModeReader);
-                            ClientExecuteScriptCommand innerExecuteScriptCommand = new ClientExecuteScriptCommand(writer, commandsWithExtendedRequest, requestWriter, responseReader, socket, scripts);
-                            client.Console console = new Console(requestWriter, responseReader, requestFabric, fileReader, innerExecuteScriptCommand, socket);
+                            ClientExecuteScriptCommand innerExecuteScriptCommand = new ClientExecuteScriptCommand(writer, commandsWithExtendedRequest, port, hostAddress, scripts);
+                            client.Console console = new Console(requestFabric, fileReader, innerExecuteScriptCommand, port, hostAddress);
                             try {
                                 console.run();
                             } catch (IncorrectScriptException e) {
@@ -101,5 +95,6 @@ public class ClientExecuteScriptCommand extends AbstractCommand {
         if (stream != null) contains = stream.anyMatch(str -> str != null && str.trim().equals("exit"));
         return contains;
     }
+
 }
 

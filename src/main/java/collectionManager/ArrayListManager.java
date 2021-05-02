@@ -6,6 +6,7 @@ import musicband.MusicGenre;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Менеджер коллекции
@@ -53,8 +54,9 @@ public class ArrayListManager {
      * Сортирует коллекцию
      */
     public void sort() {
-        Comparator<MusicBand> comparator = (MusicBand::compareTo);
-        arrayList.sort(comparator);
+        arrayList = (ArrayList<MusicBand>) arrayList.stream()
+                .sorted(MusicBand::compareTo)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -62,7 +64,9 @@ public class ArrayListManager {
      * @param musicBand
      */
     public void remove(MusicBand musicBand) {
-        arrayList.remove(musicBand);
+        arrayList = (ArrayList<MusicBand>) arrayList.stream()
+                .filter(mb -> !mb.equals(musicBand))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -77,7 +81,9 @@ public class ArrayListManager {
      */
     public void removeLast() {
         if (arrayList.size() > 0) {
-            arrayList.remove(arrayList.size() - 1);
+            arrayList = (ArrayList<MusicBand>) arrayList.stream()
+                    .limit(arrayList.size() - 1)
+                    .collect(Collectors.toList());
         }
     }
 
@@ -110,18 +116,12 @@ public class ArrayListManager {
 
     /**
      * @param id
-     * @return Объект с id, равным заданому
+     * @return Объект с id, равным заданному
      * @throws NoSuchIdException
      */
     public MusicBand getById(long id) {
         MusicBand musicBand = null;
-        for (ListIterator<MusicBand> iterator = arrayList.listIterator(); iterator.hasNext(); ) {
-            MusicBand mb = iterator.next();
-            if (mb.getId() == id) {
-                musicBand = mb;
-                break;
-            }
-        }
+        musicBand = arrayList.stream().filter(a -> a.getId() == id).findFirst().get();
         if (musicBand == null) {
             throw new NoSuchIdException();
         }
@@ -133,26 +133,23 @@ public class ArrayListManager {
      * @param musicBand Объект, который нужно вставить на место замененного
      */
     public void replace(long id, MusicBand musicBand) {
-        for (ListIterator<MusicBand> iterator = arrayList.listIterator(); iterator.hasNext(); ) {
-            MusicBand mb = iterator.next();
-            if (mb.getId() == id) {
-                arrayList.set(arrayList.indexOf(mb), musicBand);
-                break;
-            }
-        }
+        arrayList = (ArrayList<MusicBand>) arrayList.stream()
+            .map(mb -> {
+                if (mb.getId() == id) {
+                    mb = musicBand;
+                }
+                return mb;
+            })
+            .collect(Collectors.toList());
     }
 
     /**
      * @param id id объекта, который нужно удалить
      */
     public void removeById(long id) {
-        for (ListIterator<MusicBand> iterator = arrayList.listIterator(); iterator.hasNext(); ) {
-            MusicBand mb = iterator.next();
-            if (mb.getId() == id) {
-                arrayList.remove(mb);
-                break;
-            }
-        }
+        arrayList = (ArrayList<MusicBand>) arrayList.stream()
+                .filter(mb -> mb.getId() != id)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -167,14 +164,11 @@ public class ArrayListManager {
      * @param genre Жанр
      * @return Количество элементов, поле genre, которых превышает введенный жанр
      */
-    public int countGreaterThanGenre(MusicGenre genre) {
-        int count =0;
-        for (ListIterator<MusicBand> iterator = arrayList.listIterator(); iterator.hasNext(); ) {
-            MusicBand mb = iterator.next();
-            if (mb.getGenre() != null && mb.getGenre().compareTo(genre) < 0) {
-                count += 1;
-            }
-        }
+    public long countGreaterThanGenre(MusicGenre genre) {
+        long count = 0;
+        count = arrayList.stream()
+                .filter(mb -> mb.getGenre().compareTo(genre) < 0)
+                .count();
         return count;
     }
 
@@ -183,13 +177,10 @@ public class ArrayListManager {
      * @return Коллекция объектов, поле singlesCount которых меньше введенной
      */
     public ArrayList<MusicBand> filterLessThanSinglesCount(Integer singlesCount) {
-        ArrayList<MusicBand> list = new ArrayList<>();
-        for (ListIterator<MusicBand> iterator = arrayList.listIterator(); iterator.hasNext(); ) {
-            MusicBand mb = iterator.next();
-            if (mb.getSinglesCount() != null && mb.getSinglesCount().compareTo(singlesCount) < 0) {
-                list.add(mb);
-            }
-        }
+        ArrayList<MusicBand> list;
+        list = (ArrayList<MusicBand>) arrayList.stream()
+                .filter(mb -> mb.getSinglesCount() != null && mb.getSinglesCount().compareTo(singlesCount) < 0)
+                .collect(Collectors.toList());
         return list;
     }
 
@@ -197,17 +188,19 @@ public class ArrayListManager {
      * @return Отсортированную коллекцию по полю genre
      */
     public ArrayList<MusicBand> sortByGenre() {
-        ArrayList<MusicBand> sortedList = new ArrayList<>();
-        ArrayList<MusicBand> nullList = new ArrayList<>();
-        for (MusicBand musicBand : arrayList) {
-            if (musicBand.getGenre() != null) {
-                sortedList.add(musicBand);
-            } else {
-                nullList.add(musicBand);
-            }
-        }
-        sortedList.sort((o1, o2) -> o1.getGenre().compareTo(o2.getGenre()));
-        sortedList.addAll(nullList);
+        ArrayList<MusicBand> sortedList;
+        sortedList = (ArrayList<MusicBand>) arrayList.stream()
+                .filter(Objects::nonNull)
+                .sorted((o1, o2) -> {
+                    if (o1.getGenre() == null) {
+                        return -1;
+                    }
+                    if (o2.getGenre() == null) {
+                        return 1;
+                    }
+                    return o1.getGenre().compareTo(o2.getGenre());
+                })
+                .collect(Collectors.toList());
         return sortedList;
     }
 

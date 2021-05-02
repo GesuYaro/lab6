@@ -5,7 +5,6 @@ import server.exceptions.WrongRequestException;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.ArrayList;
 
 public class RequestReader {
 
@@ -23,7 +22,6 @@ public class RequestReader {
         int bytesRead = 0;
         int previousBytesRead = 0;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        ArrayList<Byte> byteArrayList = new ArrayList<>();
         do {
             previousBytesRead = bytesRead;
             try {
@@ -36,7 +34,6 @@ public class RequestReader {
             if (bytesRead > 0) {
                 for (int i = 0; i < inBuffer.limit(); i++) {
                     byteArrayOutputStream.write(inBuffer.get());
-                    //byteArrayList.add(inBuffer.get());
                 }
             }
         } while (bytesRead > 0 || previousBytesRead == inBuffer.capacity());

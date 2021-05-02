@@ -66,7 +66,7 @@ public class CommandHandler {
      * Класс, хранящий историю  команд, которые вызвал пользователь
      */
     public static class HistoryStorage {
-        private String[] commandHistory = new String[7];
+        private static String[] commandHistory = new String[7];
 
         /**
          * @return Историю команд

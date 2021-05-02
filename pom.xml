@@ -6,7 +6,7 @@
 
     <groupId>shagiev</groupId>
     <artifactId>lab6-client</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
 
     <pluginRepositories>
         <pluginRepository>
@@ -49,7 +49,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ClientMain</mainClass>
+                            <mainClass>app.ClientMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -59,7 +59,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ClientMain</mainClass>
+                            <mainClass>app.ClientMain</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

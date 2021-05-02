@@ -37,8 +37,8 @@ public class PrintFieldsDescendingGenreCommand extends AbstractCommand {
         } else {
             for (Iterator<MusicBand> it = listManager.sortByGenre().iterator(); it.hasNext(); ) {
                 MusicGenre nextGenre = it.next().getGenre();
-                if (nextGenre != null) str += nextGenre.name() + "\n";
-                else str += "null\n";
+                if (nextGenre != null) str = nextGenre.name() + "\n" + str;
+                else str = "null\n" + str;
             }
         }
         writer.write(str);

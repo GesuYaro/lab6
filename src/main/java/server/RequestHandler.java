@@ -1,7 +1,6 @@
 package server;
 
 import console.CommandHandler;
-import console.commands.CommandCode;
 import console.exсeptions.*;
 import org.slf4j.Logger;
 import server.exceptions.WrongRequestException;
@@ -24,16 +23,15 @@ public class RequestHandler implements Runnable {
 
     @Override
     public void run() {
-        CommandCode commandCode = CommandCode.DEFAULT;
-        do {
-            try {
-                Request request = null;
+        try {
+            Request request = null;
+            while (request == null){
                 try {
                     request = requestReader.readRequest();
                     if (request != null) {
                         try {
                             logger.info("Got the request");
-                            commandCode = commandHandler.execute(request);
+                            commandHandler.execute(request);
                         } catch (NoArgumentFoundException | InputValueException | IndexOutOfBoundsException | NoSuchIdException |
                                 NotEnoughArgumentsException e) {
                             writer.write(e.getMessage());
@@ -49,10 +47,10 @@ public class RequestHandler implements Runnable {
                         logger.info("Send response");
                     }
                 }
-            } catch (IOException e) {
-                logger.warn("Connection refused");
-                break;
             }
-        } while (!commandCode.equals(CommandCode.EXIT));
+        } catch (IOException e) {
+            logger.warn("Connection refused");
+        }
     }
+
 }

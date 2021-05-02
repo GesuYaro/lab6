@@ -1,7 +1,11 @@
+package app;
+
 import collectionManager.ArrayListInitializer;
 import collectionManager.ArrayListManager;
 import collectionManager.Parser;
 import console.*;
+import console.commands.Command;
+import console.commands.SaveCommand;
 import musicband.MusicBand;
 import musicband.MusicBandFieldsChecker;
 import org.slf4j.Logger;
@@ -22,6 +26,11 @@ public class ServerMain {
     private static int PORT = 3101;
     public static final Logger logger = LoggerFactory.getLogger("Server");
     private static boolean singleIterationMode = false;
+    private static Command saveCommand;
+
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownSaver(), "shutdown saver"));
+    }
 
     public static void main(String[] args) {
 
@@ -61,8 +70,9 @@ public class ServerMain {
             logger.error("Unexpected error with initialization");
         }
 
-
         ArrayListManager arrayListManager = new ArrayListManager(musicBandArrayList, initializationDate);
+        saveCommand = new SaveCommand(arrayListManager, file, logger);
+
         if (arrayListManager.containsRepeatingId()) {  // проверяем, есть ли объекты с одинаковым id
             logger.error("Error. Collection contains repeating id");
             arrayListManager.clear();
@@ -71,11 +81,12 @@ public class ServerMain {
         Connector connector = null;
         try {
             connector = new Connector(PORT);
-            server.Console console = new Console(arrayListManager, file, connector, logger);
+            server.Console console = new Console(arrayListManager, connector, logger);
             console.run(singleIterationMode);
         } catch (IOException e) {
             logger.error("Can't make a server");
         }
+
 
     }
 
@@ -91,4 +102,9 @@ public class ServerMain {
             }
         }
     }
+
+    public static void saveFile() {
+        saveCommand.execute(null, null);
+    }
+
 }

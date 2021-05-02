@@ -1,5 +1,5 @@
 console\exсeptions\InputValueException.class
-ClientMain.class
+app\ServerMain.class
 console\exсeptions\NoArgumentFoundException.class
 console\commands\UpdateCommand.class
 console\commands\PrintFieldsDescendingGenreCommand.class
@@ -18,8 +18,8 @@ console\exсeptions\ReadOrWriteFileException.class
 console\Reader.class
 musicband\Label.class
 server\servercommands\ServerCommand.class
+app\ClientMain.class
 musicband\MusicBand.class
-ServerMain.class
 console\commands\Command.class
 musicband\MusicBandFieldsChecker.class
 console\commands\InfoCommand.class
@@ -41,6 +41,7 @@ console\commands\RemoveLastCommand.class
 server\RequestReader.class
 collectionManager\CollectionToCSV.class
 console\commands\ClientExecuteScriptCommand.class
+server\ShutdownSaver.class
 client\exceptions\NotAResponseException.class
 collectionManager\ArrayListManager.class
 console\commands\AddCommand.class

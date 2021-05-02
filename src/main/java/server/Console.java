@@ -14,26 +14,23 @@ import java.util.HashMap;
 public class Console {
 
     private ArrayListManager arrayListManager;
-    private File savingFile;
     private Connector connector;
     private Logger logger;
 
-    public Console(ArrayListManager arrayListManager, File savingFile, Connector connector, Logger logger) {
+    public Console(ArrayListManager arrayListManager, Connector connector, Logger logger) {
         this.arrayListManager = arrayListManager;
-        this.savingFile = savingFile;
         this.connector = connector;
         this.logger = logger;
     }
 
     public void run(boolean singleIterationMode) {
-        Command saveCommand = new SaveCommand(arrayListManager, savingFile, logger);
         do {
             SocketChannel socketChannel = null;
             try {
                 while (socketChannel == null) {
                     socketChannel = connector.getSocketChannel();
                 }
-                logger.info("Connected");
+//                logger.info("Connected");
             } catch (IOException e) {
                 logger.warn("Can not connect");
             }
@@ -66,8 +63,7 @@ public class Console {
             RequestReader requestReader = new RequestReader(socketChannel, ByteBuffer.allocate(1024));
             RequestHandler requestHandler = new RequestHandler(commandHandler, requestReader, writer, logger);
             requestHandler.run();
-            logger.info("Client disconnected");
-            saveCommand.execute("", null);
+//            logger.info("Client disconnected");
         } while (!singleIterationMode);
     }
 

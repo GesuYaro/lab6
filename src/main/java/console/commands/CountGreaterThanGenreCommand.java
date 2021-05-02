@@ -34,7 +34,7 @@ public class CountGreaterThanGenreCommand extends AbstractCommand{
         try {
             firstArgument = firstArgument.trim().split(" ")[0].toUpperCase();
             MusicGenre genre = MusicGenre.valueOf(firstArgument);
-            int count = listManager.countGreaterThanGenre(genre);
+            long count = listManager.countGreaterThanGenre(genre);
             writer.write(String.valueOf(count));
         } catch (IllegalArgumentException e) {
             if (firstArgument.equals("")) {

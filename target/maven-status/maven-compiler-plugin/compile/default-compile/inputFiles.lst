@@ -7,6 +7,7 @@ C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\cons
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\server\servercommands\ServerCommand.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\server\RequestHandler.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\FieldsReader.java
+C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\app\ServerMain.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\client\exceptions\NotAResponseException.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\commands\AddCommand.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\Console.java
@@ -14,11 +15,11 @@ C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\musi
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\server\RequestReader.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\CommandHandler.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\exсeptions\IncorrectScriptException.java
+C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\app\ClientMain.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\CheckReader.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\commands\Command.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\commands\CountGreaterThanGenreCommand.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\Writer.java
-C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\ServerMain.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\server\Response.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\collectionManager\ArrayListManager.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\exсeptions\NoSuchCommandException.java
@@ -30,7 +31,6 @@ C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\cons
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\Reader.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\exсeptions\NotEnoughArgumentsException.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\exсeptions\InputValueException.java
-C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\ClientMain.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\commands\ClearCommand.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\exсeptions\NoSuchIdException.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\server\Request.java
@@ -59,3 +59,4 @@ C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\cons
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\musicband\MusicBand.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\commands\HelpCommand.java
 C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\console\commands\InfoCommand.java
+C:\Users\Semyon\Desktop\Учеба\Программирование\lab6\lab6_prog\src\main\java\server\ShutdownSaver.java
