@@ -54,9 +54,9 @@ public class ArrayListManager {
      * Сортирует коллекцию
      */
     public void sort() {
-        arrayList = (ArrayList<MusicBand>) arrayList.stream()
+        arrayList = arrayList.stream()
                 .sorted(MusicBand::compareTo)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -64,9 +64,9 @@ public class ArrayListManager {
      * @param musicBand
      */
     public void remove(MusicBand musicBand) {
-        arrayList = (ArrayList<MusicBand>) arrayList.stream()
+        arrayList = arrayList.stream()
                 .filter(mb -> !mb.equals(musicBand))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -81,9 +81,9 @@ public class ArrayListManager {
      */
     public void removeLast() {
         if (arrayList.size() > 0) {
-            arrayList = (ArrayList<MusicBand>) arrayList.stream()
+            arrayList = arrayList.stream()
                     .limit(arrayList.size() - 1)
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toCollection(ArrayList::new));
         }
     }
 
@@ -133,23 +133,23 @@ public class ArrayListManager {
      * @param musicBand Объект, который нужно вставить на место замененного
      */
     public void replace(long id, MusicBand musicBand) {
-        arrayList = (ArrayList<MusicBand>) arrayList.stream()
+        arrayList = arrayList.stream()
             .map(mb -> {
                 if (mb.getId() == id) {
                     mb = musicBand;
                 }
                 return mb;
             })
-            .collect(Collectors.toList());
+            .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
      * @param id id объекта, который нужно удалить
      */
     public void removeById(long id) {
-        arrayList = (ArrayList<MusicBand>) arrayList.stream()
+        arrayList = arrayList.stream()
                 .filter(mb -> mb.getId() != id)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -178,9 +178,9 @@ public class ArrayListManager {
      */
     public ArrayList<MusicBand> filterLessThanSinglesCount(Integer singlesCount) {
         ArrayList<MusicBand> list;
-        list = (ArrayList<MusicBand>) arrayList.stream()
+        list = arrayList.stream()
                 .filter(mb -> mb.getSinglesCount() != null && mb.getSinglesCount().compareTo(singlesCount) < 0)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
         return list;
     }
 
@@ -189,7 +189,7 @@ public class ArrayListManager {
      */
     public ArrayList<MusicBand> sortByGenre() {
         ArrayList<MusicBand> sortedList;
-        sortedList = (ArrayList<MusicBand>) arrayList.stream()
+        sortedList = arrayList.stream()
                 .filter(Objects::nonNull)
                 .sorted((o1, o2) -> {
                     if (o1.getGenre() == null) {
@@ -200,7 +200,7 @@ public class ArrayListManager {
                     }
                     return o1.getGenre().compareTo(o2.getGenre());
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
         return sortedList;
     }
 
